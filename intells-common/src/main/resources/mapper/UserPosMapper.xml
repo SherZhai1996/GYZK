@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.ujs.lp.intells.systemmanagement.dao.UserPosMapper">
+
+    <select id="Rcount" resultType="Long">
+        SELECT
+        count(*) as rcount
+
+        FROM
+            tb_user_pos
+        where
+        ((delete_flag is null) OR delete_flag = 0)
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID = #{hospId}
+        </if>
+
+        <if test="startDatetime!=null">
+            AND unix_timestamp(update_time) >= unix_timestamp(#{startDatetime})
+        </if>
+
+        <if test="endDatetime!=null">
+            AND unix_timestamp(#{endDatetime}) >= unix_timestamp(update_time)
+        </if>
+
+        AND (user_id in (select id from tb_user where
+        ((delete_flag is null) OR delete_flag = 0)AND (user_type = 3)
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID = #{hospId}
+        </if>
+
+        <if test="excompanyId!=null and excompanyId!=''">
+            AND excompany_id = #{excompanyId}
+        </if>
+
+        <if test="exteamId!=null and exteamId!=''">
+            AND exteam_id = #{exteamId}
+        </if>
+
+        <if test="exstaffName!=null and exstaffName!=''">
+            AND user_name LIKE CONCAT('%',#{exstaffName},'%')
+        </if>
+        ))
+
+        AND (grid_id in (select id from tb_grid where
+        ((delete_flag is null) OR delete_flag = 0)
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID = #{hospId}
+        </if>
+
+        <if test="gridFullname!=null and gridFullname!=''">
+            AND grid_fullname LIKE CONCAT('%',#{gridFullname},'%')
+        </if>
+        ))
+
+    </select>
+
+    <select id="page" resultType="cn.edu.ujs.lp.intells.systemmanagement.entity.UserPosBrief">
+        SELECT
+        a.id as id,
+
+        a.user_id as userId,
+        d.user_name as userName,
+
+        e.excompany_name as excompanyName,
+        f.exteam_name as exteamName,
+
+        a.grid_id as gridId,
+        b.grid_fullname as gridFullname,
+
+        a.hosp_ID as hospID,
+        c.hosp_name as hospName,
+
+        a.isexistibeacon as isexistibeacon,
+
+        g.ibeacon_name as ibeaconName,
+
+        a.update_time as updateTime
+
+        FROM
+        (
+        select * from tb_user_pos where
+        ((delete_flag is null) OR delete_flag = 0)
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID = #{hospId}
+        </if>
+
+        <if test="startDatetime!=null">
+            AND unix_timestamp(update_time) >= unix_timestamp(#{startDatetime})
+        </if>
+
+        <if test="endDatetime!=null">
+            AND unix_timestamp(#{endDatetime}) >= unix_timestamp(update_time)
+        </if>
+
+        AND (user_id in (select id from tb_user where
+        ((delete_flag is null) OR delete_flag = 0)AND (user_type = 3)
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID = #{hospId}
+        </if>
+
+        <if test="excompanyId!=null and excompanyId!=''">
+            AND excompany_id = #{excompanyId}
+        </if>
+
+        <if test="exteamId!=null and exteamId!=''">
+            AND exteam_id = #{exteamId}
+        </if>
+
+        <if test="exstaffName!=null and exstaffName!=''">
+            AND user_name LIKE CONCAT('%',#{exstaffName},'%')
+        </if>
+        ))
+
+        AND (grid_id in (select id from tb_grid where
+        ((delete_flag is null) OR delete_flag = 0)
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID = #{hospId}
+        </if>
+
+        <if test="gridFullname!=null and gridFullname!=''">
+            AND grid_fullname LIKE CONCAT('%',#{gridFullname},'%')
+        </if>
+        ))
+        ) as a
+        LEFT JOIN
+        (select * from tb_grid where
+        ((delete_flag is null) OR delete_flag = 0)
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID =#{hospId}
+        </if>
+
+        <if test="gridFullname!=null and gridFullname!=''">
+            AND grid_fullname LIKE CONCAT('%',#{gridFullname},'%')
+        </if>
+        ) as b ON b.id=a.grid_id
+        LEFT JOIN
+        (select * from tb_hospital_basic_information where
+        ((delete_flag is null) OR delete_flag = 0)
+        <if test="hospId!=null and hospId!=''">
+            AND id = #{hospId}
+        </if>
+        ) as c ON c.id=a.hosp_ID
+        LEFT JOIN
+        (select * from tb_user where
+        ((delete_flag is null) OR delete_flag = 0)AND (user_type = 3)
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID = #{hospId}
+        </if>
+
+        <if test="excompanyId!=null and excompanyId!=''">
+            AND excompany_id = #{excompanyId}
+        </if>
+
+        <if test="exteamId!=null and exteamId!=''">
+            AND exteam_id = #{exteamId}
+        </if>
+
+        <if test="exstaffName!=null and exstaffName!=''">
+            AND user_name LIKE CONCAT('%',#{exstaffName},'%')
+        </if>
+        ) as d ON d.id=a.user_id
+        LEFT JOIN
+        (select id,excompany_name from tb_excompany where ((delete_flag is null) or delete_flag=0)) as e on
+        e.id=d.excompany_id
+        LEFT JOIN (select id,exteam_name from tb_exteam where ((delete_flag is null) or delete_flag=0)) as f on
+        f.id=d.exteam_id
+        LEFT JOIN (select id,ibeacon_name,grid_id from tb_ibeacon where ((delete_flag is null) or delete_flag=0)
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID = #{hospId}
+        </if>
+        ) as g on
+        g.grid_id=b.id
+
+        ORDER BY
+            a.update_time desc
+    </select>
+
+</mapper>

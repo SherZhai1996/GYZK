@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.ujs.lp.intells.common.dao.User.UserMapper">
+
+    <!-- 医院职工数据对象 -->
+    <resultMap id="selectUserMap" type="cn.edu.ujs.lp.intells.common.entity.User.User">
+        <id column="id" property="id" />
+
+        <result column="openid"  property="openid"/>
+        <result column="userName"  property="userName"/>
+        <result column="userSex"  property="userSex"/>
+        <result column="userMobile" property="userMobile"/>
+        <result column="userLoginname" property="userLoginname"/>
+        <result column="userLoginnickname" property="userLoginnickname"/>
+        <result column="userPassword" property="userPassword"/>
+        <result column="userType" property="userType"/>
+        <result column="userPicpath" property="userPicpath"/>
+        <result column="isInitial" property="isInitial"/>
+        <result column="userActivestate" property="userActivestate"/>
+
+        <result column="hospID" property="hospID"/>
+        <result column="hospName" property="hospName"/>
+
+        <result column="createBy" property="createBy"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="remark" property="remark"/>
+
+        <collection property="accesshosps" ofType="cn.edu.ujs.lp.intells.common.entity.User.UserHospBrief">
+            <id column="ahid"></id>
+            <result column="ahospId" property="hospId"></result>
+            <result column="ahospName" property="hospName"></result>
+        </collection>
+
+        <collection property="roles" ofType="cn.edu.ujs.lp.intells.common.entity.User.UserRoleBrief">
+            <id column="rid" ></id>
+            <result column="roleId" property="roleId"></result>
+            <result column="roleName" property="roleName"></result>
+        </collection>
+    </resultMap>
+
+    <!-- 医院职工数据对象 -->
+    <resultMap id="selectUserBriefMap" type="cn.edu.ujs.lp.intells.common.entity.User.UserBrief">
+        <id column="id" property="id" />
+
+        <result column="openid"  property="openid"/>
+        <result column="userName"  property="userName"/>
+        <result column="userSex"  property="userSex"/>
+        <result column="userMobile" property="userMobile"/>
+        <result column="userLoginname" property="userLoginname"/>
+        <result column="userLoginnickname" property="userLoginnickname"/>
+        <result column="userPassword" property="userPassword"/>
+        <result column="userPicpath" property="userPicpath"/>
+        <result column="isInitial" property="isInitial"/>
+        <result column="userActivestate" property="userActivestate"/>
+
+        <result column="hospID" property="hospID"/>
+        <result column="hospName" property="hospName"/>
+
+        <collection property="roles" ofType="cn.edu.ujs.lp.intells.common.entity.User.UserRoleBrief">
+            <id column="rid" ></id>
+            <result column="roleId" property="roleId"></result>
+            <result column="roleName" property="roleName"></result>
+        </collection>
+    </resultMap>
+
+    <select id="list" resultMap="selectUserBriefMap">
+        SELECT
+        a.id as id,
+
+        a.openid as openid,
+        a.user_name as userName,
+        a.user_sex as userSex,
+        a.user_mobile as userMobile,
+        a.user_login_name as userLoginname,
+        a.user_login_nickname as userLoginnickname,
+        a.user_password as userPassword,
+        a.user_pic_path as userPicpath,
+        a.is_initial as isInitial,
+        a.user_activestate as userActivestate,
+
+        a.hosp_ID as hospID,
+        e.hosp_name as hospName,
+
+        c.id as rid,
+        c.role_id as roleId,
+        f.role_name as roleName
+
+        FROM
+        (
+            select * from tb_user where
+            ((delete_flag is null) or delete_flag=0) AND (user_type = 1)
+
+            <if test="hospId!=null and hospId!=''">
+                AND hosp_ID =#{hospId}
+            </if>
+
+            <if test="userName!=null and userName!=''">
+                AND  user_name LIKE CONCAT('%',#{userName},'%')
+            </if>
+
+            <if test="userMobile!=null and userMobile!=''">
+                AND user_mobile = #{userMobile}
+            </if>
+        ) as a
+        LEFT JOIN tb_user_role c ON c.user_id=a.id AND ((c.delete_flag is null) OR c.delete_flag = 0)
+        LEFT JOIN tb_hospital_basic_information e ON e.id=a.hosp_id AND ((e.delete_flag is null) OR e.delete_flag = 0)
+        LEFT JOIN tb_role f ON f.id=c.role_id AND ((f.delete_flag is null) OR f.delete_flag = 0)
+
+        ORDER BY
+        a.update_time desc
+    </select>
+
+    <select id="findByRole" resultMap="selectUserBriefMap">
+        SELECT
+        a.id as id,
+
+        a.openid as openid,
+        a.user_name as userName,
+        a.user_sex as userSex,
+        a.user_mobile as userMobile,
+        a.user_login_name as userLoginname,
+        a.user_login_nickname as userLoginnickname,
+        a.user_password as userPassword,
+        a.user_pic_path as userPicpath,
+        a.is_initial as isInitial,
+        a.user_activestate as userActivestate,
+
+        a.hosp_ID as hospID,
+        e.hosp_name as hospName,
+
+        c.id as rid,
+        c.role_id as roleId,
+        f.role_name as roleName
+
+        FROM
+        (
+        select * from tb_user where
+        ((delete_flag is null) or delete_flag=0)
+
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID =#{hospId}
+        </if>
+        ) as a
+        JOIN tb_user_role c ON c.user_id=a.id AND c.role_id = #{roleId} AND ((c.delete_flag is null) OR c.delete_flag = 0)
+        LEFT JOIN tb_hospital_basic_information e ON e.id=a.hosp_id AND ((e.delete_flag is null) OR e.delete_flag = 0)
+        LEFT JOIN tb_role f ON f.id=c.role_id AND ((f.delete_flag is null) OR f.delete_flag = 0)
+
+        ORDER BY
+        a.update_time desc
+    </select>
+
+    <select id="Rcount" resultType="Long">
+        SELECT
+        count(*) as rcount
+        FROM
+        tb_user
+        <where>
+            ((delete_flag is null) or delete_flag=0) AND (user_type = 1)
+            <if test="hospId!=null and hospId!=''">
+                AND hosp_ID =#{hospId}
+            </if>
+
+            <if test="userName!=null and userName!=''">
+                AND  user_name LIKE CONCAT('%',#{userName},'%')
+            </if>
+
+            <if test="userMobile!=null and userMobile!=''">
+                AND user_mobile = #{userMobile}
+            </if>
+        </where>
+    </select>
+
+    <select id="page" resultMap="selectUserBriefMap">
+        SELECT
+        a.id as id,
+
+        a.openid as openid,
+        a.user_name as userName,
+        a.user_sex as userSex,
+        a.user_mobile as userMobile,
+        a.user_login_name as userLoginname,
+        a.user_login_nickname as userLoginnickname,
+        a.user_password as userPassword,
+        a.user_pic_path as userPicpath,
+        a.is_initial as isInitial,
+        a.user_activestate as userActivestate,
+
+        a.hosp_ID as hospID,
+        e.hosp_name as hospName,
+
+        c.id as rid,
+        c.role_id as roleId,
+        f.role_name as roleName
+
+        FROM
+        (
+            select * from tb_user where
+                ((delete_flag is null) or delete_flag=0) AND (user_type = 1)
+                <if test="hospId!=null and hospId!=''">
+                    AND hosp_ID =#{hospId}
+                </if>
+
+                <if test="userName!=null and userName!=''">
+                    AND  user_name LIKE CONCAT('%',#{userName},'%')
+                </if>
+
+                <if test="userMobile!=null and userMobile!=''">
+                    AND user_mobile = #{userMobile}
+                </if>
+        ) as a
+        LEFT JOIN tb_user_role c ON c.user_id=a.id AND ((c.delete_flag is null) OR c.delete_flag = 0)
+        LEFT JOIN tb_hospital_basic_information e ON e.id=a.hosp_id AND ((e.delete_flag is null) OR e.delete_flag = 0)
+        LEFT JOIN tb_role f ON f.id=c.role_id AND ((f.delete_flag is null) OR f.delete_flag = 0)
+
+        ORDER BY
+            a.update_time desc
+    </select>
+
+
+    <select id="getbyid" resultMap="selectUserMap">
+        SELECT
+        a.id as id,
+
+        a.openid as openid,
+        a.user_name as userName,
+        a.user_sex as userSex,
+        a.user_mobile as userMobile,
+        a.user_login_name as userLoginname,
+        a.user_login_nickname as userLoginnickname,
+        a.user_password as userPassword,
+        a.user_type as userType,
+        a.user_pic_path as userPicpath,
+        a.is_initial as isInitial,
+        a.user_activestate as userActivestate,
+
+        a.hosp_ID as hospID,
+        e.hosp_name as hospName,
+
+        a.create_by as createBy,
+        a.create_time as createTime,
+        a.update_time as updateTime,
+        a.remark as remark,
+
+        c.id as rid,
+        c.role_id as roleId,
+        f.role_name as roleName,
+
+        d.id as ahid,
+        d.hosp_id as ahospId,
+        g.hosp_name as ahospName
+
+        FROM
+        (
+            select * from tb_user where
+            ((delete_flag is null) OR delete_flag = 0)
+            AND id = #{Id}
+        ) as a
+        LEFT JOIN tb_user_role c ON c.user_id=a.id AND ((c.delete_flag is null) OR c.delete_flag = 0)
+        LEFT JOIN tb_user_hosp d ON d.user_id=a.id AND ((d.delete_flag is null) OR d.delete_flag = 0)
+        LEFT JOIN tb_hospital_basic_information e ON e.id=a.hosp_id AND ((e.delete_flag is null) OR e.delete_flag = 0)
+        LEFT JOIN tb_role f ON f.id=c.role_id AND ((f.delete_flag is null) OR f.delete_flag = 0)
+        LEFT JOIN tb_hospital_basic_information g ON g.id=d.hosp_id AND ((g.delete_flag is null) OR g.delete_flag = 0)
+
+        ORDER BY
+        a.update_time desc
+    </select>
+
+    <select id="findByName" resultMap="selectUserMap">
+        SELECT
+        a.id as id,
+
+        a.openid as openid,
+        a.user_name as userName,
+        a.user_sex as userSex,
+        a.user_mobile as userMobile,
+        a.user_login_name as userLoginname,
+        a.user_login_nickname as userLoginnickname,
+        a.user_password as userPassword,
+        a.user_type as userType,
+        a.user_pic_path as userPicpath,
+        a.is_initial as isInitial,
+        a.user_activestate as userActivestate,
+
+        a.hosp_ID as hospID,
+        e.hosp_name as hospName,
+
+        a.create_by as createBy,
+        a.create_time as createTime,
+        a.update_time as updateTime,
+        a.remark as remark,
+
+        c.id as rid,
+        c.role_id as roleId,
+        f.role_name as roleName,
+
+        d.id as ahid,
+        d.hosp_id as ahospId,
+        g.hosp_name as ahospName
+
+        FROM
+        (
+            select * from tb_user where
+            ((delete_flag is null) OR delete_flag = 0)
+            <if test="hospId!=null and hospId!=''">
+                AND hosp_ID =#{hospId}
+            </if>
+
+            <if test="userName!=null and userName!=''">
+                AND user_name = #{userName}
+            </if>
+
+            <if test="userMobile!=null and userMobile!=''">
+                AND user_mobile = #{userMobile}
+            </if>
+
+            <if test="userLoginname!=null and userLoginname!=''">
+                AND user_login_name = #{userLoginname}
+            </if>
+        ) as a
+        LEFT JOIN tb_user_role c ON c.user_id=a.id AND ((c.delete_flag is null) OR c.delete_flag = 0)
+        LEFT JOIN tb_user_hosp d ON d.user_id=a.id AND ((d.delete_flag is null) OR d.delete_flag = 0)
+        LEFT JOIN tb_hospital_basic_information e ON e.id=a.hosp_id AND ((e.delete_flag is null) OR e.delete_flag = 0)
+        LEFT JOIN tb_role f ON f.id=c.role_id AND ((f.delete_flag is null) OR f.delete_flag = 0)
+        LEFT JOIN tb_hospital_basic_information g ON g.id=d.hosp_id AND ((g.delete_flag is null) OR g.delete_flag = 0)
+
+        ORDER BY
+        a.update_time desc
+    </select>
+
+    <select id="getUserRoles" resultType="cn.edu.ujs.lp.intells.common.entity.User.UserRoleBrief">
+        SELECT
+        a.id as id,
+        a.role_id as roleId,
+        b.role_name as roleName
+
+        FROM
+        (
+        select * from tb_user_role where
+        ((delete_flag is null) or delete_flag=0)
+        AND user_id =#{userId}
+        <if test="roleId!=null and roleId!=''">
+            AND role_id = #{roleId}
+        </if>
+        ) as a
+        LEFT JOIN tb_role b ON b.id=a.role_id AND ((b.delete_flag is null) OR b.delete_flag = 0)
+
+        ORDER BY
+        a.update_time desc
+    </select>
+
+    <!-- 依据人员ID删除人员记录 -->
+    <delete id="delete" parameterType="java.lang.String" statementType="CALLABLE">
+		{call deleteUser(#{userId,mode=IN})}
+	</delete>
+
+    <!-- 依据人员ID删除人员记录 -->
+    <delete id="deleteAtt" parameterType="java.lang.String" statementType="CALLABLE">
+		{call deleteUserAtt(#{userId,mode=IN})}
+	</delete>
+
+    <!-- 依据人员ID删除人员记录 -->
+    <delete id="deleteUserAllRoles" parameterType="java.lang.String" statementType="CALLABLE">
+		{call deleteUserAllRoles(#{userId,mode=IN})}
+	</delete>
+
+    <!-- 依据人员ID删除人员记录 -->
+    <delete id="deleteUserGrid" parameterType="java.lang.String" statementType="CALLABLE">
+		{call deleteUserGrid(#{userId,mode=IN})}
+	</delete>
+
+    <!-- 依据人员ID删除人员记录 -->
+    <delete id="deleteExstaff_skillcertificate" parameterType="java.lang.String" statementType="CALLABLE">
+		{call deleteExstaff_skillcertificate(#{userId,mode=IN})}
+	</delete>
+
+    <!-- 依据人员ID删除人员记录 -->
+    <delete id="deleteUserHosp" parameterType="java.lang.String" statementType="CALLABLE">
+		{call deleteUserHosp(#{userId,mode=IN})}
+	</delete>
+
+    <!-- 依据人员ID删除人员记录 -->
+    <update id="SetUserPassword" parameterType="java.lang.String" statementType="CALLABLE">
+		{call SetUserPassword(#{userId,mode=IN},#{password,mode=IN})}
+	</update>
+
+    <!-- 依据人员ID设置人员角色 -->
+    <update id="SetUserRole" parameterType="java.lang.String" statementType="CALLABLE">
+		{call SetUserRole(#{userId,mode=IN},#{roleId,mode=IN})}
+	</update>
+
+    <update id="DeleteUserRole" parameterType="java.lang.String" statementType="CALLABLE">
+		{call DeleteUserRole(#{userId,mode=IN},#{roleId,mode=IN})}
+	</update>
+
+    <update id="DeleteUserExstaffRole" parameterType="java.lang.String" statementType="CALLABLE">
+		{call DeleteUserExstaffRole(#{userId,mode=IN})}
+	</update>
+
+    <!-- 用于设置用户的hospID，即与医院的关联，进而删除其医院管理员角色-->
+    <update id="DeleteUserHospManageRole" parameterType="java.lang.String" statementType="CALLABLE">
+		{call DeleteUserHospManageRole(#{userId,mode=IN},#{hospId,mode=IN})}
+	</update>
+
+    <!-- 设置系统用户与医院的关联，进而设置其为医院管理员 -->
+    <update id="SetUserHospManageRole" parameterType="java.lang.String" statementType="CALLABLE">
+		{call SetUserHospManageRole(#{userId,mode=IN},#{hospId,mode=IN})}
+	</update>
+
+    <!-- 校验用户的角色，将无连接角色删除 -->
+    <update id="VerifyUserRoles" parameterType="java.lang.String" statementType="CALLABLE">
+		{call VerifyUserRoles(#{userId,mode=IN})}
+	</update>
+</mapper>

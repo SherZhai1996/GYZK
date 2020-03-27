@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.ujs.lp.intells.basicinformation.dao.Excompany.ExteamMapper">
+
+    <resultMap id="selectExteamMap" type="cn.edu.ujs.lp.intells.basicinformation.entity.Excompany.Exteam">
+        <id column="id" property="id" />
+
+        <result column="exteamName"  property="exteamName"/>
+        <result column="exteamCode"  property="exteamCode"/>
+        <result column="exservicesId" property="exservicesId"/>
+        <result column="exservicesName" property="exservicesName"/>
+        <result column="excompanyId" property="excompanyId"/>
+        <result column="excompanyName" property="excompanyName"/>
+        <result column="serviceId" property="serviceId"/>
+        <result column="exteamLeaderName" property="exteamLeaderName"/>
+        <result column="exteamLeaderMobile" property="exteamLeaderMobile"/>
+        <result column="exteamLeaderId" property="exteamLeaderId"/>
+        <result column="exteamTel"  property="exteamTel"/>
+        <result column="exteamStaffAmount"  property="exteamStaffAmount"/>
+        <result column="superId"  property="superId"/>
+        <result column="exteamFullname" property="exteamFullname"/>
+        <result column="exteamLevel" property="exteamLevel"/>
+
+        <result column="hospID" property="hospID"/>
+
+        <result column="createBy" property="createBy"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="remark" property="remark"/>
+
+        <collection property="gridIds" ofType="cn.edu.ujs.lp.intells.common.entity.Hosp.ExteamGridBrief">
+            <id column="gid" ></id>
+            <result column="gridId" property="gridId"></result>
+            <result column="gridFullname" property="gridFullname"></result>
+        </collection>
+    </resultMap>
+
+    <select id="getbyid" resultMap="selectExteamMap">
+        SELECT
+        a.id as id,
+
+        exteam_name as exteamName,
+        exteam_code as exteamCode,
+        a.exservices_id as exservicesId,
+        c.exservice_name as exservicesName,
+        a.excompany_id as excompanyId,
+        b.excompany_name as excompanyName,
+        a.service_id as serviceId,
+        exteam_leader_name as exteamLeaderName,
+        exteam_leader_mobile as exteamLeaderMobile,
+        exteam_tel as exteamTel,
+        exteam_leader_id as exteamLeaderId,
+        exteam_staff_amount as exteamStaffAmount,
+        a.super_id as superId,
+        exteam_fullname as exteamFullname,
+        exteam_level as exteamLevel,
+
+        a.hosp_ID as hospID,
+
+        a.create_by as createBy,
+        a.create_time as createTime,
+        a.update_time as updateTime,
+        a.remark as remark,
+
+        d.id as gid,
+        d.grid_id as gridId,
+        e.grid_fullname as gridFullname
+
+        FROM
+        tb_exteam a
+        LEFT JOIN (select id,excompany_name from tb_excompany where ((delete_flag is null) or delete_flag=0)) as b on b.id=a.excompany_id
+        LEFT JOIN (select id,exservice_name from tb_excompany_services where ((delete_flag is null) or delete_flag=0)) as c on c.id=a.exservices_id
+        LEFT JOIN tb_exteam_grid d ON d.team_id=a.id AND ((d.delete_flag is null) OR d.delete_flag = 0)
+        LEFT JOIN tb_grid e ON e.id=d.grid_id AND ((e.delete_flag is null) OR e.delete_flag = 0)
+
+        WHERE
+        ((a.delete_flag is null) OR a.delete_flag = 0)
+        AND a.id = #{Id}
+        ORDER BY
+        a.update_time desc
+    </select>
+
+    <select id="findExteamByExcompanyIDandExteamName" resultMap="selectExteamMap">
+        SELECT
+        a.id as id,
+
+        exteam_name as exteamName,
+        exteam_code as exteamCode,
+        a.exservices_id as exservicesId,
+        c.exservice_name as exservicesName,
+        a.excompany_id as excompanyId,
+        b.excompany_name as excompanyName,
+        a.service_id as serviceId,
+        exteam_leader_name as exteamLeaderName,
+        exteam_leader_mobile as exteamLeaderMobile,
+        exteam_tel as exteamTel,
+        exteam_leader_id as exteamLeaderId,
+        exteam_staff_amount as exteamStaffAmount,
+        a.super_id as superId,
+        exteam_fullname as exteamFullname,
+        exteam_level as exteamLevel,
+
+        a.hosp_ID as hospID,
+
+        a.create_by as createBy,
+        a.create_time as createTime,
+        a.update_time as updateTime,
+        a.remark as remark,
+
+        d.id as gid,
+        d.grid_id as gridId,
+        e.grid_fullname as gridFullname
+
+        FROM
+        tb_exteam a
+        LEFT JOIN (select id,excompany_name from tb_excompany where ((delete_flag is null) or delete_flag=0)) as b on b.id=a.excompany_id
+        LEFT JOIN (select id,exservice_name from tb_excompany_services where ((delete_flag is null) or delete_flag=0)) as c on c.id=a.exservices_id
+        LEFT JOIN tb_exteam_grid d ON d.team_id=a.id AND ((d.delete_flag is null) OR d.delete_flag = 0)
+        LEFT JOIN tb_grid e ON e.id=d.grid_id AND ((e.delete_flag is null) OR e.delete_flag = 0)
+
+        WHERE
+        ((a.delete_flag is null) OR a.delete_flag = 0)
+        AND a.hosp_ID = #{hospId}
+        <if test="excompanyId!=null and excompanyId!=''">
+            AND a.excompany_id = #{excompanyId}
+        </if>
+        <if test="exteamName!=null and exteamName!=''">
+            AND a.exteam_name = #{exteamName}
+        </if>
+        ORDER BY
+        a.update_time desc
+    </select>
+
+    <!-- 依据外委公司ID删除外委公司及其相关记录 -->
+    <delete id="delete" parameterType="java.lang.String" statementType="CALLABLE">
+		{call delete_exteam(#{Id,mode=IN})}
+	</delete>
+
+    <!-- 依据服务班组编码删除服务班组及其子节点记录 -->
+    <delete id="delete_exteam_bycode" parameterType="java.lang.String" statementType="CALLABLE">
+		{call delete_exteam_bycode(#{tcode,mode=IN})}
+	</delete>
+
+    <!-- 依据外委公司ID删除外委公司及其相关记录 -->
+    <delete id="deleteAtt" parameterType="java.lang.String" statementType="CALLABLE">
+		{call delete_exteam_grid(#{Id,mode=IN})}
+	</delete>
+
+    <select id="Rcount" resultType="Long">
+        SELECT
+        count(*) as rcount
+
+        FROM
+        tb_exteam
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID = #{hospId}
+        </if>
+        <if test="excompanyId!=null and excompanyId!=''">
+            AND excompany_id = #{excompanyId}
+        </if>
+        <if test="exteamName!=null and exteamName!=''">
+            AND exteam_name LIKE CONCAT('%',#{exteamName},'%')
+        </if>
+    </select>
+
+    <select id="page" resultType="cn.edu.ujs.lp.intells.common.entity.Hosp.ExteamBrief">
+        SELECT
+        a.id as id,
+
+        exteam_name as exteamName,
+        exteam_code as exteamCode,
+        exservices_id as exservicesId,
+        c.exservice_name as exservicesName,
+        excompany_id as excompanyId,
+        b.excompany_name as excompanyName,
+        service_id as serviceId,
+        exteam_leader_name as exteamLeaderName,
+        exteam_leader_mobile as exteamLeaderMobile,
+        exteam_tel as exteamTel,
+        exteam_leader_id as exteamLeaderId,
+
+        exteam_staff_amount as exteamStaffAmount,
+
+        super_id as superId,
+        exteam_fullname as exteamFullname,
+        exteam_level as exteamLevel
+        FROM
+        tb_exteam a
+        LEFT JOIN (select id,excompany_name from tb_excompany where ((delete_flag is null) or delete_flag=0)) as b on b.id=a.excompany_id
+        LEFT JOIN (select id,exservice_name from tb_excompany_services where ((delete_flag is null) or delete_flag=0)) as c on c.id=a.exservices_id
+
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        <if test="hospId!=null and hospId!=''">
+            AND a.hosp_ID = #{hospId}
+        </if>
+        <if test="excompanyId!=null and excompanyId!=''">
+            AND excompany_id = #{excompanyId}
+        </if>
+        <if test="exteamName!=null and exteamName!=''">
+            AND exteam_name LIKE CONCAT('%',#{exteamName},'%')
+        </if>
+        ORDER BY
+        update_time desc
+    </select>
+</mapper>
+

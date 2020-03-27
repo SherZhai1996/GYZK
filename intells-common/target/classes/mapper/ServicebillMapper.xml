@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.ujs.lp.intells.common.dao.Serviceitem.ServicebillMapper">
+
+    <select id="getbyid" resultType="cn.edu.ujs.lp.intells.common.entity.Serviceitem.Servicebill">
+        SELECT
+        a.id as id,
+
+        a.serviceitem_name as serviceitemName,
+	    a.category_id as categoryId,
+        a.service_type_id as serviceTypeId,
+        b.serviceitemcategory_name as categoryName,
+
+        a.hosp_ID as hospID,
+
+        a.create_by as createBy,
+        a.create_time as createTime,
+        a.update_time as updateTime,
+        a.remark as remark
+        FROM
+        tb_servicebill as a
+        LEFT JOIN tb_serviceitemcategory b ON b.id=a.category_id
+
+        WHERE
+        ((a.delete_flag is null) OR a.delete_flag = 0)
+        AND a.id = #{Id}
+        ORDER BY
+        a.update_time desc
+    </select>
+
+    <select id="findByName" resultType="cn.edu.ujs.lp.intells.common.entity.Serviceitem.Servicebill">
+        SELECT
+        a.id as id,
+
+        a.serviceitem_name as serviceitemName,
+        a.category_id as categoryId,
+        a.service_type_id as serviceTypeId,
+        b.serviceitemcategory_name as categoryName,
+
+        a.hosp_ID as hospID,
+
+        a.create_by as createBy,
+        a.create_time as createTime,
+        a.update_time as updateTime,
+        a.remark as remark
+        FROM
+        tb_servicebill as a
+        LEFT JOIN tb_serviceitemcategory b ON b.id=a.category_id
+
+        WHERE
+        ((a.delete_flag is null) OR a.delete_flag = 0)
+
+        <if test="categoryId!=null and categoryId!=''">
+            AND a.category_id = #{categoryId}
+        </if>
+        AND a.serviceitem_name = #{serviceitemName}
+        ORDER BY
+        a.update_time desc
+    </select>
+
+    <!-- 依据设备类别编号删除设备类别及设备记录 -->
+    <update id="delete" parameterType="java.lang.String" statementType="CALLABLE">
+		{call delete_servicebill(#{servicebillid,mode=IN})}
+	</update>
+
+    <select id="list" resultType="cn.edu.ujs.lp.intells.common.entity.Serviceitem.ServicebillBrief">
+        SELECT
+        a.id as id,
+
+        a.serviceitem_name as serviceitemName,
+        a.category_id as categoryId,
+        a.service_type_id as serviceTypeId,
+        b.serviceitemcategory_name as categoryName
+
+        FROM
+        tb_servicebill as a
+        LEFT JOIN tb_serviceitemcategory b ON b.id=a.category_id
+
+        WHERE
+        ((a.delete_flag is null) OR a.delete_flag = 0)
+
+        <if test="categoryId!=null and categoryId!=''">
+            AND a.category_id = #{categoryId}
+        </if>
+        <if test="serviceitemName!=null and serviceitemName!=''">
+            AND a.serviceitem_name LIKE CONCAT('%',#{serviceitemName},'%')
+        </if>
+
+        ORDER BY
+        a.category_id,a.update_time desc
+    </select>
+
+    <select id="Rcount" resultType="Long">
+        SELECT
+        count(*) as rcount
+
+        FROM
+        tb_servicebill
+
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+
+        <if test="categoryId!=null and categoryId!=''">
+            AND category_id = #{categoryId}
+        </if>
+        <if test="serviceitemName!=null and serviceitemName!=''">
+            AND serviceitem_name LIKE CONCAT('%',#{serviceitemName},'%')
+        </if>
+
+    </select>
+
+    <select id="page" resultType="cn.edu.ujs.lp.intells.common.entity.Serviceitem.ServicebillBrief">
+        SELECT
+        a.id as id,
+
+        a.serviceitem_name as serviceitemName,
+        a.category_id as categoryId,
+        a.service_type_id as serviceTypeId,
+        b.serviceitemcategory_name as categoryName
+
+        FROM
+        tb_servicebill as a
+        LEFT JOIN tb_serviceitemcategory b ON b.id=a.category_id
+
+        WHERE
+        ((a.delete_flag is null) OR a.delete_flag = 0)
+
+        <if test="categoryId!=null and categoryId!=''">
+            AND a.category_id = #{categoryId}
+        </if>
+        <if test="serviceitemName!=null and serviceitemName!=''">
+            AND a.serviceitem_name LIKE CONCAT('%',#{serviceitemName},'%')
+        </if>
+
+        ORDER BY
+        a.update_time desc
+    </select>
+</mapper>

@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.ujs.lp.intells.basicinformation.dao.Excompany.ExstaffMapper">
+    <!-- 外委职工的完整数据对象 -->
+    <resultMap id="selectExstaffMap" type="cn.edu.ujs.lp.intells.basicinformation.entity.Excompany.Exstaff">
+        <id column="id" property="id" />
+
+        <result column="exstaffName"  property="exstaffName"/>
+        <result column="exstaffSex"  property="exstaffSex"/>
+        <result column="exstaffBirthday" property="exstaffBirthday"/>
+        <result column="exstaffMobile" property="exstaffMobile"/>
+        <result column="exstaffJobno" property="exstaffJobno"/>
+        <result column="exstaffJobstate" property="exstaffJobstate"/>
+        <result column="exstaffActivestate" property="exstaffActivestate"/>
+        <result column="excompanyId" property="excompanyId"/>
+        <result column="excompanyName" property="excompanyName"/>
+        <result column="exteamId" property="exteamId"/>
+        <result column="exteamName" property="exteamName"/>
+        <result column="exstaffEmploystartdate" property="exstaffEmploystartdate"/>
+        <result column="exstaffEmployenddate" property="exstaffEmployenddate"/>
+        <result column="exstaffEmercontactname" property="exstaffEmercontactname"/>
+        <result column="exstaffEemercontacttel" property="exstaffEmercontacttel"/>
+
+        <result column="exstaffPic" property="exstaffPic"/>
+        <result column="exstaffTechnicalwork" property="exstaffTechnicalwork"/>
+        <result column="exstaffExpertise" property="exstaffExpertise"/>
+
+        <result column="exstaffLeadname" property="exstaffLeadname"/>
+        <result column="exstaffStature" property="exstaffStature"/>
+        <result column="exstaffWeight" property="exstaffWeight"/>
+        <result column="exstaffShoesize" property="exstaffShoesize"/>
+
+        <result column="exstaffEmercontactrelationship" property="exstaffEmercontactrelationship"/>
+
+        <result column="exstaffLoginname" property="exstaffLoginname"/>
+        <result column="exstaffLoginnickname" property="exstaffLoginnickname"/>
+        <result column="exstaffLoginpassword" property="exstaffLoginpassword"/>
+
+        <result column="exstaffTel" property="exstaffTel"/>
+        <result column="exstaffEmail" property="exstaffEmail"/>
+        <result column="exstaffNation" property="exstaffNation"/>
+        <result column="exstaffNativeplace" property="exstaffNativeplace"/>
+        <result column="exstaffMarriagestate" property="exstaffMarriagestate"/>
+        <result column="exstaffIdentifyid" property="exstaffIdentifyid"/>
+        <result column="exstaffDegree" property="exstaffDegree"/>
+        <result column="exstaffWeixinid" property="exstaffWeixinid"/>
+        <result column="exstaffQqid" property="exstaffQqid"/>
+        <result column="exstaffAddress" property="exstaffAddress"/>
+
+        <result column="hospID" property="hospID"/>
+
+        <result column="createBy" property="createBy"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="remark" property="remark"/>
+
+        <collection property="roleIds" ofType="cn.edu.ujs.lp.intells.common.entity.User.UserRoleBrief">
+            <id column="rid"></id>
+            <result column="roleId" property="roleId"></result>
+            <result column="roleName" property="roleName"></result>
+        </collection>
+
+        <collection property="gridIds" ofType="cn.edu.ujs.lp.intells.common.entity.User.UserGridBrief">
+            <id column="gid"></id>
+            <result column="gridId" property="gridId"></result>
+            <result column="gridFullname" property="gridFullname"></result>
+        </collection>
+
+        <collection property="exstaffskillcertificates" ofType="cn.edu.ujs.lp.intells.basicinformation.entity.Excompany.ExstaffskillcertificateBrief">
+            <id column="sid"></id>
+            <result column="skillcertificateId" property="skillcertificateId"></result>
+            <result column="skillcertificatePic" property="skillcertificatePic"></result>
+        </collection>
+
+    </resultMap>
+
+    <resultMap id="selectExstaffBriefMap" type="cn.edu.ujs.lp.intells.common.entity.Hosp.ExstaffBrief">
+        <id column="id" property="id" />
+
+        <result column="exstaffName"  property="exstaffName"/>
+        <result column="exstaffSex"  property="exstaffSex"/>
+        <result column="exstaffBirthday" property="exstaffBirthday"/>
+        <result column="exstaffMobile" property="exstaffMobile"/>
+        <result column="exstaffJobno" property="exstaffJobno"/>
+        <result column="exstaffJobstate" property="exstaffJobstate"/>
+        <result column="exstaffActivestate" property="exstaffActivestate"/>
+        <result column="excompanyId" property="excompanyId"/>
+        <result column="excompanyName" property="excompanyName"/>
+        <result column="exteamId" property="exteamId"/>
+        <result column="exteamName" property="exteamName"/>
+        <result column="exstaffEmploystartdate" property="exstaffEmploystartdate"/>
+        <result column="exstaffEmployenddate" property="exstaffEmployenddate"/>
+        <result column="exstaffEmercontactname" property="exstaffEmercontactname"/>
+        <result column="exstaffEemercontacttel" property="exstaffEmercontacttel"/>
+
+        <result column="remark" property="remark"/>
+
+        <collection property="roleIds" ofType="cn.edu.ujs.lp.intells.common.entity.User.UserRoleBrief">
+            <id column="rid"></id>
+            <result column="roleId" property="roleId"></result>
+            <result column="roleName" property="roleName"></result>
+        </collection>
+
+        <collection property="gridIds" ofType="cn.edu.ujs.lp.intells.common.entity.User.UserGridBrief">
+            <id column="gid"></id>
+            <result column="gridId" property="gridId"></result>
+            <result column="gridFullname" property="gridFullname"></result>
+        </collection>
+
+    </resultMap>
+
+
+
+    <!-- 由ID获取外委职工完整数据对象 -->
+    <select id="getbyid" resultMap="selectExstaffMap">
+      SELECT
+        a.id as id,
+
+        a.openid as openid,
+        a.user_name as exstaffName,
+        a.user_sex as exstaffSex,
+        a.user_mobile as exstaffMobile,
+        a.user_activestate as exstaffActivestate,
+        a.user_login_name as exstaffLoginname,
+        a.user_login_nickname as exstaffLoginnickname,
+        a.user_password as exstaffLoginpassword,
+
+        a.exstaff_birthday as exstaffBirthday,
+        a.exstaff_jobNo as exstaffJobno,
+        a.exstaff_jobstate as exstaffJobstate,
+        a.excompany_id as excompanyId,
+        b.excompany_name as excompanyName,
+        a.exteam_id as exteamId,
+        c.exteam_name as exteamName,
+        a.exstaff_employstartdate as exstaffEmploystartdate,
+        a.exstaff_employenddate as exstaffEmployenddate,
+        a.exstaff_emercontactname as exstaffEmercontactname,
+        a.exstaff_emercontacttel as exstaffEmercontacttel,
+
+	    a.exstaff_pic as exstaffPic,
+        a.exstaff_technicalwork as exstaffTechnicalwork,
+	    a.exstaff_expertise as exstaffExpertise,
+
+	    a.exstaff_leadname as exstaffLeadname,
+	    a.exstaff_stature as exstaffStature,
+	    a.exstaff_weight as exstaffWeight,
+	    a.exstaff_shoesize as exstaffShoesize,
+
+	    a.exstaff_emercontactrelationship as exstaffEmercontactrelationship,
+
+	    a.exstaff_tel as exstaffTel,
+	    a.exstaff_email as exstaffEmail,
+	    a.exstaff_nation as exstaffNation,
+	    a.exstaff_native_place as exstaffNativeplace,
+	    a.exstaff_marriage_state as exstaffMarriagestate,
+	    a.exstaff_identify_id as exstaffIdentifyid,
+	    a.exstaff_degree as exstaffDegree,
+	    a.exstaff_weixin_id as exstaffWeixinid,
+	    a.exstaff_qq_id as exstaffQqid,
+	    a.exstaff_address as exstaffAddress,
+
+        a.create_by as createBy,
+        a.create_time as createTime,
+        a.update_time as updateTime,
+        a.remark as remark,
+
+        i.id as sid,
+        i.exstaff_id as sexstaffId,
+        i.skillcertificate_id as skillcertificateId,
+        i.skillcertificate_pic as skillcertificatePic,
+
+        d.id as rid,
+        d.user_id as rexstaffId,
+        d.role_id as roleId,
+        g.role_name as roleName,
+
+        e.id as gid,
+        e.user_id as gexstaffId,
+        e.grid_id as gridId,
+        f.grid_fullname as gridFullname
+    FROM
+        tb_user  a
+        LEFT JOIN (select id,excompany_name from tb_excompany where ((delete_flag is null) or delete_flag=0)) as b on b.id=a.excompany_id
+        LEFT JOIN (select id,exteam_name from tb_exteam where ((delete_flag is null) or delete_flag=0)) as c on c.id=a.exteam_id
+        Left JOIN tb_user_role d ON a.id = d.user_id AND ((d.delete_flag is null) OR d.delete_flag = 0)
+        Left JOIN tb_user_grid e ON a.id = e.user_id AND ((e.delete_flag is null) OR e.delete_flag = 0)
+        LEFT JOIN tb_grid f ON f.id=e.grid_id AND ((f.delete_flag is null) OR f.delete_flag = 0)
+        LEFT JOIN tb_role g ON g.id=d.role_id AND ((g.delete_flag is null) OR g.delete_flag = 0)
+
+        Left JOIN tb_exstaff_skillcertificate i ON a.id = i.exstaff_id AND ((i.delete_flag is null) OR i.delete_flag = 0)
+    WHERE
+        ((a.delete_flag is null) OR a.delete_flag = 0) AND (a.user_type = 3)
+        AND a.id = #{Id}
+    ORDER BY
+        a.update_time desc
+    </select>
+
+    <!-- 依据外委公司ID、服务班组ID和姓名获取外委职工完整数据对象列表 -->
+    <select id="findExstaffByExcompanyIDExteamIDandName" resultMap="selectExstaffMap">
+        SELECT
+        a.id as id,
+
+        a.openid as openid,
+        a.user_name as exstaffName,
+        a.user_sex as exstaffSex,
+        a.user_mobile as exstaffMobile,
+        a.user_activestate as exstaffActivestate,
+        a.user_login_name as exstaffLoginname,
+        a.user_login_nickname as exstaffLoginnickname,
+        a.user_password as exstaffLoginpassword,
+
+        a.exstaff_birthday as exstaffBirthday,
+        a.exstaff_jobNo as exstaffJobno,
+        a.exstaff_jobstate as exstaffJobstate,
+        a.excompany_id as excompanyId,
+        a.exteam_id as exteamId,
+        a.exstaff_employstartdate as exstaffEmploystartdate,
+        a.exstaff_employenddate as exstaffEmployenddate,
+        a.exstaff_emercontactname as exstaffEmercontactname,
+        a.exstaff_emercontacttel as exstaffEmercontacttel,
+
+        a.exstaff_pic as exstaffPic,
+        a.exstaff_technicalwork as exstaffTechnicalwork,
+        a.exstaff_expertise as exstaffExpertise,
+
+        a.exstaff_leadname as exstaffLeadname,
+        a.exstaff_stature as exstaffStature,
+        a.exstaff_weight as exstaffWeight,
+        a.exstaff_shoesize as exstaffShoesize,
+
+        a.exstaff_emercontactrelationship as exstaffEmercontactrelationship,
+
+        a.exstaff_tel as exstaffTel,
+        a.exstaff_email as exstaffEmail,
+        a.exstaff_nation as exstaffNation,
+        a.exstaff_native_place as exstaffNativeplace,
+        a.exstaff_marriage_state as exstaffMarriagestate,
+        a.exstaff_identify_id as exstaffIdentifyid,
+        a.exstaff_degree as exstaffDegree,
+        a.exstaff_weixin_id as exstaffWeixinid,
+        a.exstaff_qq_id as exstaffQqid,
+        a.exstaff_address as exstaffAddress,
+
+        a.create_by as createBy,
+        a.create_time as createTime,
+        a.update_time as updateTime,
+        a.remark as remark,
+
+        c.id as sid,
+        c.exstaff_id as sexstaffId,
+        c.skillcertificate_id as skillcertificateId,
+        c.skillcertificate_pic as skillcertificatePic,
+
+        d.id as rid,
+        d.user_id as rexstaffId,
+        d.role_id as roleId,
+
+        e.id as gid,
+        e.user_id as gexstaffId,
+        e.grid_id as gridId
+
+        FROM
+        tb_user  a
+        Left JOIN tb_exstaff_skillcertificate c ON a.id = c.exstaff_id AND ((c.delete_flag is null) OR c.delete_flag = 0)
+        Left JOIN tb_user_role d ON a.id = d.user_id AND ((d.delete_flag is null) OR d.delete_flag = 0)
+        Left JOIN tb_user_grid e ON a.id = e.user_id AND ((e.delete_flag is null) OR e.delete_flag = 0)
+
+        WHERE
+        ((a.delete_flag is null) OR a.delete_flag = 0) AND (a.user_type = 3)
+        AND a.hosp_ID = #{hospId}
+        <if test="excompanyId!=null and excompanyId!=''">
+            AND a.excompany_id = #{excompanyId}
+        </if>
+        <if test="exteamId!=null and exteamId!=''">
+            AND a.exteam_id = #{exteamId}
+        </if>
+        <if test="exstaffName!=null and exstaffName!=''">
+            AND a.user_name = #{exstaffName}
+        </if>
+        ORDER BY
+        a.update_time desc
+    </select>
+
+
+    <!-- 依据外委职工ID、餐饮证书ID获取餐饮证书完整数据对象列表 -->
+    <select id="getExstaffrestaurantcertificate" resultType="cn.edu.ujs.lp.intells.basicinformation.entity.Excompany.Exstaffrestaurantcertificate">
+        SELECT
+        id,
+
+        exstaff_id as exstaffId,
+        restaurantcertificate_id as restaurantcertificateId,
+        restaurantcertificate_pic as restaurantcertificatePic,
+
+        create_by as createBy,
+        create_time as createTime,
+        update_time as updateTime,
+        remark as remark
+        FROM
+        tb_exstaff_restaurantcertificate
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        AND exstaff_id = #{exstaffId}
+        AND restaurantcertificate_id = #{restaurantcertificateId}
+        ORDER BY
+        update_time desc
+    </select>
+
+
+    <!-- 依据外委职工ID、技术证书ID获取技术证书完整数据对象列表 -->
+    <select id="getExstaffskillcertificate" resultType="cn.edu.ujs.lp.intells.basicinformation.entity.Excompany.Exstaffskillcertificate">
+        SELECT
+        id,
+
+        exstaff_id as exstaffId,
+        skillcertificate_id as skillcertificateId,
+        skillcertificate_pic as skillcertificatePic,
+
+        create_by as createBy,
+        create_time as createTime,
+        update_time as updateTime,
+        remark as remark
+        FROM
+        tb_exstaff_skillcertificate
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        AND exstaff_id = #{exstaffId}
+        AND skillcertificate_id = #{skillcertificateId}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据外委公司ID删除外委公司及其相关记录 -->
+    <delete id="delete" parameterType="java.lang.String" statementType="CALLABLE">
+		{call delete_exstaff_byid(#{Id,mode=IN})}
+	</delete>
+
+    <!-- 依据人员ID删除人员及其相关信息记录 -->
+    <delete id="deleteAtt" parameterType="java.lang.String" statementType="CALLABLE">
+		{call Clear_exstaff_Att(#{exstaffId,mode=IN})}
+	</delete>
+
+    <update id="Clear_exstaff_allskillcertificate" parameterType="java.lang.String" statementType="CALLABLE">
+		{call Clear_exstaff_allskillcertificate(#{exstaffId,mode=IN})}
+	</update>
+
+    <update id="deleteExstaff_skillcertificate" parameterType="java.lang.String" statementType="CALLABLE">
+		{call deleteExstaff_skillcertificate(#{exstaffId,mode=IN},#{skillcertificateId,mode=IN})}
+	</update>
+
+    <update id="clearExstaff_skillcertificate_pic" parameterType="java.lang.String" statementType="CALLABLE">
+		{call clearExstaff_skillcertificate_pic(#{exstaffId,mode=IN},#{skillcertificateId,mode=IN})}
+	</update>
+
+    <update id="UpdateExstaff_skillcertificate_pic" parameterType="java.lang.String" statementType="CALLABLE">
+		{call UpdateExstaff_skillcertificate_pic(#{exstaffId,mode=IN},#{skillcertificateId,mode=IN},#{picfilename,mode=IN})}
+	</update>
+
+    <select id="Rcount" resultType="Long">
+        SELECT
+        count(*) as rcount
+
+        FROM
+        tb_user
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0) AND (user_type = 3)
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID = #{hospId}
+        </if>
+        <if test="excompanyId!=null and excompanyId!=''">
+            AND excompany_id = #{excompanyId}
+        </if>
+        <if test="exteamId!=null and exteamId!=''">
+            AND exteam_id = #{exteamId}
+        </if>
+        <if test="exstaffName!=null and exstaffName!=''">
+            AND user_name LIKE CONCAT('%',#{exstaffName},'%')
+        </if>
+        <if test="exstaffMobile!=null and exstaffMobile!=''">
+            AND user_mobile = #{exstaffMobile}
+        </if>
+        ORDER BY
+        update_time desc
+    </select>
+
+
+    <select id="page" resultMap="cn.edu.ujs.lp.intells.common.dao.CommonMapper.selectExstaffBriefMap">
+        SELECT
+        a.id as id,
+
+        user_name as exstaffName,
+        user_sex as exstaffSex,
+        exstaff_birthday as exstaffBirthday,
+        user_mobile as exstaffMobile,
+        exstaff_jobNo as exstaffJobNo,
+        exstaff_jobstate as exstaffJobstate,
+        user_activestate as exstaffActivestate,
+        a.excompany_id as excompanyId,
+        b.excompany_name as excompanyName,
+        a.exteam_id as exteamId,
+        c.exteam_name as exteamName,
+        exstaff_employstartdate as exstaffEmploystartdate,
+        exstaff_employenddate as exstaffEmployenddate,
+        exstaff_emercontactname as exstaffEmercontactname,
+        exstaff_emercontacttel as exstaffEmercontacttel
+
+        <!-- d.id as rid,
+        d.user_id as rexstaffId,
+        d.role_id as roleId
+        g.role_name as roleName -->
+
+        <!-- e.id as gid,
+        e.user_id as gexstaffId,
+        e.grid_id as gridId,
+        f.grid_fullname as gridFullname -->
+
+        FROM
+        (
+        select * from tb_user where
+        ((delete_flag is null) or delete_flag=0) AND (user_type = 3)
+
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID = #{hospId}
+        </if>
+        <if test="excompanyId!=null and excompanyId!=''">
+            AND excompany_id = #{excompanyId}
+        </if>
+        <if test="exteamId!=null and exteamId!=''">
+            AND exteam_id = #{exteamId}
+        </if>
+        <if test="exstaffName!=null and exstaffName!=''">
+            AND user_name LIKE CONCAT('%',#{exstaffName},'%')
+        </if>
+        <if test="exstaffMobile!=null and exstaffMobile!=''">
+            AND user_mobile = #{exstaffMobile}
+        </if>
+        ) as a
+
+        LEFT JOIN (select id,excompany_name from tb_excompany where ((delete_flag is null) or delete_flag=0)) as b on b.id=a.excompany_id
+        LEFT JOIN (select id,exteam_name from tb_exteam where ((delete_flag is null) or delete_flag=0)) as c on c.id=a.exteam_id
+        <!-- LEFT JOIN (select * from tb_user_role where ((delete_flag is null) OR delete_flag = 0)) as d ON d.user_id=a.id -->
+        <!-- Left JOIN tb_user_grid e ON a.id = e.user_id AND ((e.delete_flag is null) OR e.delete_flag = 0) -->
+        <!-- LEFT JOIN tb_grid f ON f.id=e.grid_id AND ((f.delete_flag is null) OR f.delete_flag = 0) -->
+        <!--JOIN tb_role g ON g.id=d.role_id AND ((g.delete_flag is null) OR g.delete_flag = 0) -->
+
+        ORDER BY
+        a.update_time desc
+    </select>
+</mapper>

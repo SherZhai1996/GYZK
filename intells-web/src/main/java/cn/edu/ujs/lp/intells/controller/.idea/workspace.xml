@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="4fbe6b82-426b-46c7-a139-4613f7462ee0" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-basic-information/src/main/java/cn/edu/ujs/lp/intells/basicinformation/dao/Excompany/ExstaffGridRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-basic-information/src/main/java/cn/edu/ujs/lp/intells/basicinformation/dao/Excompany/ExteamGridRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-basic-information/src/main/java/cn/edu/ujs/lp/intells/basicinformation/entity/Excompany/ExstaffGrid.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-basic-information/src/main/java/cn/edu/ujs/lp/intells/basicinformation/entity/Excompany/ExteamGrid.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/dao/User/UserPosMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/dao/User/UserPosRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/entity/Common/RoleBrief.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/entity/Hosp/ExstaffGridBrief.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/entity/Hosp/ExstaffRoleBrief.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/entity/Hosp/ExteamGridBrief.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/entity/Hosp/StaffGridBrief.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/entity/Hosp/StaffRoleBrief.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/entity/User/UserPos.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/entity/User/UserPosBrief.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/request/GetGridsRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/request/User/UserPosPageRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/request/User/UserPosSaveRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/service/UserPosService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/resources/mapper/UserPosMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Common/DBCommonController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Common/UserPosController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/basicinformation/DeptController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/basicinformation/ExcompanyController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/basicinformation/ExservicesController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/basicinformation/ExstaffController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/basicinformation/ExteamController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/basicinformation/GridController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/basicinformation/HospController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/basicinformation/StaffController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/patrolinspection/SecuritypatroltemplateController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../../../../../../src/main/resources/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-app-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-app-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-basic-information/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-basic-information/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/dao/CallerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/dao/CallerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/dao/CommonMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/dao/CommonMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/dao/DataDictionaryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/dao/DataDictionaryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/dao/SerialNumberRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/dao/SerialNumberRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/entity/BaseEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/entity/Common/BaseEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/entity/BaseHospEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/entity/Common/BaseHospEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/entity/DataDictionary.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/entity/Common/DataDictionary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/entity/DataDictionaryList.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/entity/Common/DataDictionaryList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/entity/EmptyEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/entity/Common/EmptyEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/entity/SerialNumber.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/entity/Common/SerialNumber.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/entity/TreeInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/entity/Common/TreeInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/service/DBCommonService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/service/DBCommonService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/service/DataDictionaryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/service/DataDictionaryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/service/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/service/FileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/service/SerialNumberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/service/SerialNumberService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/utils/ExcelUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/utils/ExcelUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/utils/TreeUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/java/cn/edu/ujs/lp/intells/common/utils/TreeUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/resources/mapper/CommonMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-common/src/main/resources/mapper/CommonMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-operation-maintenance/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-operation-maintenance/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-operation-maintenance/src/main/java/cn/edu/ujs/lp/intells/operationmaintenance/dao/EquipmentmaintenanceMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-operation-maintenance/src/main/java/cn/edu/ujs/lp/intells/operationmaintenance/dao/EquipmentmaintenanceMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-operation-maintenance/src/main/java/cn/edu/ujs/lp/intells/operationmaintenance/service/EquipmentmaintenanceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-operation-maintenance/src/main/java/cn/edu/ujs/lp/intells/operationmaintenance/service/EquipmentmaintenanceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-operation-maintenance/src/main/resources/mapper/EquipmentmaintenanceMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-operation-maintenance/src/main/resources/mapper/EquipmentmaintenanceMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-patrol-inspection/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-patrol-inspection/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-phone-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-phone-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-phone-service/src/main/java/cn/edu/ujs/lp/intells/phoneservice/entity/CallInformation.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-phone-service/src/main/java/cn/edu/ujs/lp/intells/phoneservice/entity/CallInformation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-service-center/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-service-center/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-service-center/src/main/java/cn/edu/ujs/lp/intells/servicecenter/dao/ScheduleWorkMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-service-center/src/main/java/cn/edu/ujs/lp/intells/servicecenter/dao/ScheduleWorkMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-service-center/src/main/java/cn/edu/ujs/lp/intells/servicecenter/dao/SelectPersonAutoDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-service-center/src/main/java/cn/edu/ujs/lp/intells/servicecenter/dao/SelectPersonAutoDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-service-center/src/main/java/cn/edu/ujs/lp/intells/servicecenter/dao/WorkSchedulingMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-service-center/src/main/java/cn/edu/ujs/lp/intells/servicecenter/dao/WorkSchedulingMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-service-center/src/main/java/cn/edu/ujs/lp/intells/servicecenter/request/AskLeaveRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-service-center/src/main/java/cn/edu/ujs/lp/intells/servicecenter/request/AskLeaveRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-service-center/src/main/java/cn/edu/ujs/lp/intells/servicecenter/request/ExstaffIdAndNameRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-service-center/src/main/java/cn/edu/ujs/lp/intells/servicecenter/request/ExstaffIdAndNameRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-service-center/src/main/java/cn/edu/ujs/lp/intells/servicecenter/request/TodayScheduleRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-service-center/src/main/java/cn/edu/ujs/lp/intells/servicecenter/request/TodayScheduleRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-service-center/src/main/java/cn/edu/ujs/lp/intells/servicecenter/request/selectExstaffAutoRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-service-center/src/main/java/cn/edu/ujs/lp/intells/servicecenter/service/WorkSchedulingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-service-center/src/main/java/cn/edu/ujs/lp/intells/servicecenter/service/WorkSchedulingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-service-center/src/main/resources/mapper/ScheduleWorkMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-service-center/src/main/resources/mapper/ScheduleWorkMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-service-center/src/main/resources/mapper/SelectPersonAutoDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-service-center/src/main/resources/mapper/SelectPersonAutoDao.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-service-center/src/main/resources/mapper/WorkSchedulingMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-service-center/src/main/resources/mapper/WorkSchedulingMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../intells-system-management/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../intells-system-management/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SelectExstaffAutoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SelectExstaffAutoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WorkSchedulingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/WorkSchedulingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../../pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../../pom.xml" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../../../../../../.." />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="C:\Users\96380\Desktop\intells20191205_2\intells-web\src\main\java\cn\edu\ujs\lp\intells\controller\.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1UsByl0ZCmoQz0QrTocptGNwPIb" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4fbe6b82-426b-46c7-a139-4613f7462ee0" name="Default Changelist" comment="" />
+      <created>1576135678547</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1576135678547</updated>
+      <workItem from="1576135679775" duration="91000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

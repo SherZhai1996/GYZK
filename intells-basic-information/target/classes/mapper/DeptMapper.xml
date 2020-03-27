@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.ujs.lp.intells.basicinformation.dao.hosp.DeptMapper">
+
+    <select id="Rcount" resultType="Long">
+        SELECT
+        count(*) as rcount
+
+        FROM
+        tb_department
+        WHERE
+        ((delete_flag is null) or delete_flag=0)
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID = #{hospId}#
+        </if>
+        <if test="deptName!=null and deptName!=''">
+            AND dept_name LIKE CONCAT('%',#{deptName},'%')
+        </if>
+        ORDER BY
+        update_time desc
+    </select>
+
+    <select id="page" resultType="cn.edu.ujs.lp.intells.common.entity.Hosp.DepartmentBrief">
+        SELECT
+        id as id,
+
+        dept_name as deptName,
+        dept_code as deptCode,
+        dept_tel as deptTel,
+        dept_leader_name as deptLeaderName,
+        dept_leader_tel as deptLeaderTel,
+        superior_id as superiorId,
+        dept_selfcode as deptSelfcode,
+        dept_level as deptLevel,
+        dept_fullname as deptFullname
+        FROM
+        tb_department
+        WHERE
+        ((delete_flag is null) or delete_flag=0)
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID = #{hospId}#
+        </if>
+        <if test="deptName!=null and deptName!=''">
+            AND dept_name LIKE CONCAT('%',#{deptName},'%')
+        </if>
+        ORDER BY
+        update_time desc
+    </select>
+
+
+    <select id="getbyid" resultType="cn.edu.ujs.lp.intells.basicinformation.entity.Hosp.Department">
+        SELECT
+        id,
+
+        dept_name as deptName,
+        dept_code as deptCode,
+        dept_tel as deptTel,
+        dept_leader_name as deptLeaderName,
+        dept_leader_tel as deptLeaderTel,
+        superior_id as superiorId,
+        dept_level as deptLevel,
+        dept_fullname as deptFullname,
+        dept_selfcode as deptSelfcode,
+        dept_leader_ID as deptLeaderId,
+
+        hosp_ID as HospID,
+
+        create_by as createBy,
+        create_time as createTime,
+        update_time as updateTime,
+        remark as remark
+        FROM
+        tb_department
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        AND id = #{Id}
+        ORDER BY
+        update_time desc
+    </select>
+
+
+    <select id="findByName" resultType="cn.edu.ujs.lp.intells.basicinformation.entity.Hosp.Department">
+        SELECT
+        id,
+
+        dept_name as deptName,
+        dept_code as deptCode,
+        dept_tel as deptTel,
+        dept_leader_name as deptLeaderName,
+        dept_leader_tel as deptLeaderTel,
+        superior_id as superiorId,
+        dept_level as deptLevel,
+        dept_fullname as deptFullname,
+        dept_selfcode as deptSelfcode,
+        dept_leader_ID as deptLeaderId,
+
+        hosp_ID as HospID,
+
+        create_by as createBy,
+        create_time as createTime,
+        update_time as updateTime,
+        remark as remark
+        FROM
+        tb_department
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        AND hosp_ID = #{hospId}
+        <if test="superiorId!=null and superiorId!=''">
+        AND superior_id = #{superiorId}
+        </if>
+        <if test="deptName!=null and deptName!=''">
+        AND dept_name = #{deptName}
+        </if>
+        ORDER BY
+        update_time desc
+    </select>
+
+
+    <select id="findByFullname" resultType="cn.edu.ujs.lp.intells.basicinformation.entity.Hosp.Department">
+        SELECT
+        id,
+
+        dept_name as deptName,
+        dept_code as deptCode,
+        dept_tel as deptTel,
+        dept_leader_name as deptLeaderName,
+        dept_leader_tel as deptLeaderTel,
+        superior_id as superiorId,
+        dept_level as deptLevel,
+        dept_fullname as deptFullname,
+        dept_selfcode as deptSelfcode,
+        dept_leader_ID as deptLeaderId,
+
+        hosp_ID as HospID,
+
+        create_by as createBy,
+        create_time as createTime,
+        update_time as updateTime,
+        remark as remark
+        FROM
+        tb_department
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        AND hosp_ID = #{hospId}
+        <if test="deptFullname!=null and deptFullname!=''">
+        AND dept_fullname = #{deptFullname}
+        </if>
+        ORDER BY
+        update_time desc
+    </select>
+
+
+    <!-- 依据科室部门自编码删除科室部门及其子部门记录 -->
+    <delete id="delete" parameterType="java.lang.String" statementType="CALLABLE">
+		{call delete_department_bycode(#{dCode,mode=IN})}
+	</delete>
+</mapper>

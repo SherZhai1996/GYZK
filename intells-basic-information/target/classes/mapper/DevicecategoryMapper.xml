@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.ujs.lp.intells.basicinformation.dao.Device.DevicecategoryMapper">
+
+    <select id="getbyid" resultType="cn.edu.ujs.lp.intells.basicinformation.entity.Device.Devicecategory">
+        SELECT
+        id,
+
+        category_code as categoryCode,
+        category_name as categoryName,
+        superior_id as superiorId,
+
+        devicecategory_level as devicecategoryLevel,
+
+        sortorder as sortOrder,
+        isusing as isUsing,
+
+        manage_affiliation as manageAffiliation,
+        respon_affiliation as responAffiliation,
+
+        category_fullname as categoryFullname,
+
+        hosp_ID as hospID,
+
+        create_by as createBy,
+        create_time as createTime,
+        update_time as updateTime,
+        remark as remark
+        FROM
+        tb_devicecategory
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        AND id = #{id}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <select id="findByName" resultType="cn.edu.ujs.lp.intells.basicinformation.entity.Device.Devicecategory">
+        SELECT
+        id,
+
+        category_code as categoryCode,
+        category_name as categoryName,
+        superior_id as superiorId,
+
+        devicecategory_level as devicecategoryLevel,
+
+        sortorder as sortOrder,
+        isusing as isUsing,
+
+        manage_affiliation as manageAffiliation,
+        respon_affiliation as responAffiliation,
+
+        category_fullname as categoryFullname,
+
+        hosp_ID as HospID,
+
+        create_by as createBy,
+        create_time as createTime,
+        update_time as updateTime,
+        remark as remark
+        FROM
+        tb_devicecategory
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        AND hosp_ID = #{hospId}
+        <if test="superiorId!=null and superiorId!=''">
+            AND superior_id = #{superiorId}
+        </if>
+        AND category_name = #{categoryName}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据设备类别编号删除设备类别及设备记录 -->
+    <delete id="deletebyCode" parameterType="java.lang.String" statementType="CALLABLE">
+		{call delete_devicecategory(#{categoryCode,mode=IN})}
+	</delete>
+
+    <select id="Rcount" resultType="Long">
+        SELECT
+        count(*) as rcount
+
+        FROM
+        tb_devicecategory
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID = #{hospId}
+        </if>
+        <if test="categoryName!=null and categoryName!=''">
+            AND category_name LIKE CONCAT('%',#{categoryName},'%')
+        </if>
+    </select>
+
+    <select id="page" resultType="cn.edu.ujs.lp.intells.common.entity.Device.DevicecategoryBrief">
+        SELECT
+        id,
+
+        category_code as categoryCode,
+        category_name as categoryName,
+        superior_id as superiorId,
+
+        devicecategory_level as devicecategoryLevel,
+
+        sortorder as sortOrder,
+        isusing as isUsing,
+
+        manage_affiliation as manageAffiliation,
+        respon_affiliation as responAffiliation,
+
+        category_fullname as categoryFullname
+        FROM
+        tb_devicecategory
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID = #{hospId}
+        </if>
+        <if test="categoryName!=null and categoryName!=''">
+            AND category_name LIKE CONCAT('%',#{categoryName},'%')
+        </if>
+
+        ORDER BY
+        update_time desc
+    </select>
+</mapper>
+

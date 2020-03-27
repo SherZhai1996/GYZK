@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.ujs.lp.intells.basicinformation.dao.Excompany.ExcompanyMapper">
+
+
+
+    <select id="getbyid" resultType="cn.edu.ujs.lp.intells.basicinformation.entity.Excompany.Excompany">
+        SELECT
+        id,
+        excompany_name as excompanyName,
+        excompany_legal as excompanyLegal,
+        excompany_leader_name as excompanyLeadername,
+        excompany_leader_tel as excompanyLeadertel,
+        excompany_leader_ID as excompanyLeaderID,
+        excompany_staff_amount as excompanyStaffamount,
+        excompany_service_startdate as excompanyServicestartdate,
+        excompany_service_enddate as excompanyServiceenddate,
+        excompany_certificate as excompanyCertificate,
+        excompany_complaint_tel as excompanyComplainttel,
+        services_remark as servicesRemark,
+        excompany_address as excompanyAddress,
+
+        hosp_ID as HospID,
+
+        create_by as createBy,
+        create_time as createTime,
+        update_time as updateTime,
+        remark as remark
+        FROM
+        tb_excompany
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        AND id = #{Id}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <select id="getbyName" resultType="cn.edu.ujs.lp.intells.basicinformation.entity.Excompany.Excompany">
+        SELECT
+        id,
+        excompany_name as excompanyName,
+        excompany_legal as excompanyLegal,
+        excompany_leader_name as excompanyLeadername,
+        excompany_leader_tel as excompanyLeadertel,
+        excompany_leader_ID as excompanyLeaderID,
+        excompany_staff_amount as excompanyStaffamount,
+        excompany_service_startdate as excompanyServicestartdate,
+        excompany_service_enddate as excompanyServiceenddate,
+        excompany_certificate as excompanyCertificate,
+        excompany_complaint_tel as excompanyComplainttel,
+        services_remark as servicesRemark,
+        excompany_address as excompanyAddress,
+
+        hosp_ID as HospID,
+
+        create_by as createBy,
+        create_time as createTime,
+        update_time as updateTime,
+        remark as remark
+        FROM
+        tb_excompany
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        AND hosp_ID = #{hospId}
+        <if test="excompanyName!=null and excompanyName!=''">
+            AND excompany_name = #{excompanyName}
+        </if>
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据外委公司ID删除外委公司及其相关记录 -->
+    <delete id="delete" parameterType="java.lang.String" statementType="CALLABLE">
+		{call delete_excompany(#{Id,mode=IN})}
+	</delete>
+
+    <select id="Rcount" resultType="Long">
+        SELECT
+        count(*) as rcount
+
+        FROM
+        tb_excompany
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID = #{hospId}
+        </if>
+        <if test="excompanyName!=null and excompanyName!=''">
+            AND excompany_name LIKE CONCAT('%',#{excompanyName},'%')
+        </if>
+        ORDER BY
+        update_time desc
+    </select>
+
+    <select id="page" resultType="cn.edu.ujs.lp.intells.common.entity.Hosp.ExcompanyBrief">
+        SELECT
+        id,
+        excompany_name as excompanyName,
+        excompany_legal as excompanyLegal,
+        excompany_leader_name as excompanyLeadername,
+        excompany_leader_tel as excompanyLeadertel,
+        excompany_staff_amount as excompanyStaffamount,
+        excompany_service_startdate as excompanyServicestartdate,
+        excompany_service_enddate as excompanyServiceenddate,
+        excompany_address as excompanyAddress
+        FROM
+        tb_excompany
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID = #{hospId}
+        </if>
+        <if test="excompanyName!=null and excompanyName!=''">
+            AND excompany_name LIKE CONCAT('%',#{excompanyName},'%')
+        </if>
+        ORDER BY
+        update_time desc
+    </select>
+</mapper>

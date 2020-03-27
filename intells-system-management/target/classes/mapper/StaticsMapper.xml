@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.ujs.lp.intells.systemmanagement.dao.StaticsMapper">
+
+    <!--    工单总数-->
+
+    <!--    综合维修查询总数-->
+    <select id="queryCountCompreRepairTaskSheet" resultType="java.lang.Integer">
+        select count(*)
+        from
+        tb_comprerepair_tasksheet a
+        WHERE
+        (a.delete_flag = 0 or a.delete_flag is null)
+        <if test="hospId !=null and hospId !=''">
+            and a.hosp_ID = #{hospId}
+        </if>
+        <if test="decTime != null and decTime != '' ">
+            <if test="decTime == '今天' ">
+                and to_days(a.create_time) = to_days(now())
+            </if>
+            <if test="decTime == '本周' ">
+                and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(a.create_time)
+            </if>
+            <if test="decTime == '本月' ">
+                and DATE_FORMAT(a.create_time,'%Y%m') = DATE_FORMAT(CURDATE(),'%Y%m')
+            </if>
+            <if test="decTime == '本年' ">
+                and YEAR(a.create_time)=YEAR(NOW())
+            </if>
+
+        </if>
+    </select>
+
+    <!--    应急保洁总数-->
+    <select id="queryCountCleaningTaskSheet" resultType="java.lang.Integer">
+        select count(*)
+        from
+        tb_cleaning_tasksheet a
+        WHERE
+        (a.delete_flag = 0 or a.delete_flag is null)
+        <if test="hospId !=null and hospId !=''">
+            and a.hosp_ID = #{hospId}
+        </if>
+        <if test="decTime != null and decTime != '' ">
+            <if test="decTime == '今天' ">
+                and to_days(a.create_time) = to_days(now())
+            </if>
+            <if test="decTime == '本周' ">
+                and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(a.create_time)
+            </if>
+            <if test="decTime == '本月' ">
+                and DATE_FORMAT(a.create_time,'%Y%m') = DATE_FORMAT(CURDATE(),'%Y%m')
+            </if>
+            <if test="decTime == '本年' ">
+                and YEAR(a.create_time)=YEAR(NOW())
+            </if>
+
+        </if>
+    </select>
+
+    <!--    运送服务总数-->
+    <select id="queryCountTransportTaskSheet" resultType="java.lang.Integer">
+        select count(*)
+        from
+        tb_transport_tasksheet a
+        WHERE
+        (a.delete_flag = 0 or a.delete_flag is null)
+        <if test="hospId !=null and hospId !=''">
+            and a.hosp_ID = #{hospId}
+        </if>
+        <if test="decTime != null and decTime != '' ">
+            <if test="decTime == '今天' ">
+                and to_days(a.create_time) = to_days(now())
+            </if>
+            <if test="decTime == '本周' ">
+                and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(a.create_time)
+            </if>
+            <if test="decTime == '本月' ">
+                and DATE_FORMAT(a.create_time,'%Y%m') = DATE_FORMAT(CURDATE(),'%Y%m')
+            </if>
+            <if test="decTime == '本年' ">
+                and YEAR(a.create_time)=YEAR(NOW())
+            </if>
+
+        </if>
+    </select>
+
+    <!--    设备维修总数-->
+    <select id="queryCountEquipTaskSheet" resultType="java.lang.Integer">
+        select count(*)
+        from
+        tb_equipmentrepair_tasksheet a
+        WHERE
+        (a.delete_flag = 0 or a.delete_flag is null)
+        <if test="hospId !=null and hospId !=''">
+            and a.hosp_ID = #{hospId}
+        </if>
+        <if test="decTime != null and decTime != '' ">
+            <if test="decTime == '今天' ">
+                and to_days(a.create_time) = to_days(now())
+            </if>
+            <if test="decTime == '本周' ">
+                and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(a.create_time)
+            </if>
+            <if test="decTime == '本月' ">
+                and DATE_FORMAT(a.create_time,'%Y%m') = DATE_FORMAT(CURDATE(),'%Y%m')
+            </if>
+            <if test="decTime == '本年' ">
+                and YEAR(a.create_time)=YEAR(NOW())
+            </if>
+
+        </if>
+    </select>
+
+    <!-- 投诉-->
+
+    <!--    综合维修投诉总数-->
+    <select id="queryCountComplaintCompreTaskSheet" resultType="java.lang.Integer">
+        select count(*)
+        from
+        tb_complaint_tasksheet a
+        WHERE
+        (a.delete_flag = 0 or a.delete_flag is null)
+        and a.tasksheet_type='01'  -- 综合维修
+        <if test="hospId !=null and hospId !=''">
+            and a.hosp_ID = #{hospId}
+        </if>
+        <if test="decTime != null and decTime != '' ">
+            <if test="decTime == '今天' ">
+                and to_days(a.create_time) = to_days(now())
+            </if>
+            <if test="decTime == '本周' ">
+                and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(a.create_time)
+            </if>
+            <if test="decTime == '本月' ">
+                and DATE_FORMAT(a.create_time,'%Y%m') = DATE_FORMAT(CURDATE(),'%Y%m')
+            </if>
+            <if test="decTime == '本年' ">
+                and YEAR(a.create_time)=YEAR(NOW())
+            </if>
+
+        </if>
+    </select>
+
+    <!--    应急保洁投诉总数-->
+    <select id="queryCountComplaintCleaningTaskSheet" resultType="java.lang.Integer">
+        select count(*)
+        from
+        tb_complaint_tasksheet a
+        WHERE
+        (a.delete_flag = 0 or a.delete_flag is null)
+        and a.tasksheet_type='02'  -- 应急保洁
+        <if test="hospId !=null and hospId !=''">
+            and a.hosp_ID = #{hospId}
+        </if>
+        <if test="decTime != null and decTime != '' ">
+            <if test="decTime == '今天' ">
+                and to_days(a.create_time) = to_days(now())
+            </if>
+            <if test="decTime == '本周' ">
+                and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(a.create_time)
+            </if>
+            <if test="decTime == '本月' ">
+                and DATE_FORMAT(a.create_time,'%Y%m') = DATE_FORMAT(CURDATE(),'%Y%m')
+            </if>
+            <if test="decTime == '本年' ">
+                and YEAR(a.create_time)=YEAR(NOW())
+            </if>
+
+        </if>
+    </select>
+
+    <!--    运送服务投诉总数-->
+    <select id="queryCountComplaintTransportTaskSheet" resultType="java.lang.Integer">
+        select count(*)
+        from
+        tb_complaint_tasksheet a
+        WHERE
+        (a.delete_flag = 0 or a.delete_flag is null)
+        and a.tasksheet_type='03'  -- 运送服务
+        <if test="hospId !=null and hospId !=''">
+            and a.hosp_ID = #{hospId}
+        </if>
+        <if test="decTime != null and decTime != '' ">
+            <if test="decTime == '今天' ">
+                and to_days(a.create_time) = to_days(now())
+            </if>
+            <if test="decTime == '本周' ">
+                and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(a.create_time)
+            </if>
+            <if test="decTime == '本月' ">
+                and DATE_FORMAT(a.create_time,'%Y%m') = DATE_FORMAT(CURDATE(),'%Y%m')
+            </if>
+            <if test="decTime == '本年' ">
+                and YEAR(a.create_time)=YEAR(NOW())
+            </if>
+
+        </if>
+    </select>
+
+    <!--    设备维修投诉总数-->
+    <select id="queryCountComplaintEquipTaskSheet" resultType="java.lang.Integer">
+        select count(*)
+        from
+        tb_complaint_tasksheet a
+        WHERE
+        (a.delete_flag = 0 or a.delete_flag is null)
+        and a.tasksheet_type='05'  -- 设备维修
+        <if test="hospId !=null and hospId !=''">
+            and a.hosp_ID = #{hospId}
+        </if>
+        <if test="decTime != null and decTime != '' ">
+            <if test="decTime == '今天' ">
+                and to_days(a.create_time) = to_days(now())
+            </if>
+            <if test="decTime == '本周' ">
+                and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(a.create_time)
+            </if>
+            <if test="decTime == '本月' ">
+                and DATE_FORMAT(a.create_time,'%Y%m') = DATE_FORMAT(CURDATE(),'%Y%m')
+            </if>
+            <if test="decTime == '本年' ">
+                and YEAR(a.create_time)=YEAR(NOW())
+            </if>
+
+        </if>
+    </select>
+
+
+    <!--    完成工单-->
+
+    <!--    综合维修完成工单-->
+    <select id="queryCountCompleteCompreTaskSheet" resultType="java.lang.Integer">
+        select count(*) from
+        (select * from tb_comprerepair_tasksheet where (delete_flag is null or delete_flag = 0)
+        <if test="hospId !=null and hospId !=''">
+            and hosp_ID = #{hospId}
+        </if>
+        <if test="decTime != null and decTime != '' ">
+            <if test="decTime == '今天' ">
+                and to_days(create_time) = to_days(now())
+            </if>
+            <if test="decTime == '本周' ">
+                and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(create_time)
+            </if>
+            <if test="decTime == '本月' ">
+                and DATE_FORMAT(create_time,'%Y%m') = DATE_FORMAT(CURDATE(),'%Y%m')
+            </if>
+            <if test="decTime == '本年' ">
+                and YEAR(create_time)=YEAR(NOW())
+            </if>
+        </if>
+        ) a
+        LEFT JOIN
+        (select MAX(tasksheet_state) as tasksheet_state,tasksheet_id from tb_comprerepair_tasksheet_statetrack where (delete_flag is null or delete_flag = 0) GROUP BY tasksheet_id)b
+        on a.id = b.tasksheet_id
+        where
+        b.tasksheet_state &gt;= 5
+    </select>
+
+    <!--    应急保洁完成工单-->
+    <select id="queryCountCompleteCleaingTaskSheet" resultType="java.lang.Integer">
+        select count(*) from
+        (select * from tb_cleaning_tasksheet where (delete_flag is null or delete_flag = 0)
+        <if test="hospId !=null and hospId !=''">
+            and hosp_ID = #{hospId}
+        </if>
+        <if test="decTime != null and decTime != '' ">
+            <if test="decTime == '今天' ">
+                and to_days(create_time) = to_days(now())
+            </if>
+            <if test="decTime == '本周' ">
+                and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(create_time)
+            </if>
+            <if test="decTime == '本月' ">
+                and DATE_FORMAT(create_time,'%Y%m') = DATE_FORMAT(CURDATE(),'%Y%m')
+            </if>
+            <if test="decTime == '本年' ">
+                and YEAR(create_time)=YEAR(NOW())
+            </if>
+        </if>
+        ) a
+        LEFT JOIN
+        (select MAX(tasksheet_state) as tasksheet_state,tasksheet_id from tb_cleaning_tasksheet_statetrack where (delete_flag is null or delete_flag = 0) GROUP BY tasksheet_id)b
+        on a.id = b.tasksheet_id
+        where
+        b.tasksheet_state &gt;= 5
+    </select>
+
+    <!--    运送服务完成工单-->
+    <select id="queryCountCompleteTrasnportTaskSheet" resultType="java.lang.Integer">
+        select count(*) from
+        (select * from tb_transport_tasksheet where (delete_flag is null or delete_flag = 0)
+        <if test="hospId !=null and hospId !=''">
+            and hosp_ID = #{hospId}
+        </if>
+        <if test="decTime != null and decTime != '' ">
+            <if test="decTime == '今天' ">
+                and to_days(create_time) = to_days(now())
+            </if>
+            <if test="decTime == '本周' ">
+                and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(create_time)
+            </if>
+            <if test="decTime == '本月' ">
+                and DATE_FORMAT(create_time,'%Y%m') = DATE_FORMAT(CURDATE(),'%Y%m')
+            </if>
+            <if test="decTime == '本年' ">
+                and YEAR(create_time)=YEAR(NOW())
+            </if>
+        </if>
+        ) a
+        LEFT JOIN
+        (select MAX(tasksheet_state) as tasksheet_state,tasksheet_id from tb_transport_tasksheet_statetrack where (delete_flag is null or delete_flag = 0) GROUP BY tasksheet_id)b
+        on a.id = b.tasksheet_id
+        where
+        b.tasksheet_state &gt;= 5
+    </select>
+
+    <!--    设备完成工单-->
+    <select id="queryCountCompleteEquipTaskSheet" resultType="java.lang.Integer">
+        select count(*) from
+        (select * from tb_equipmentrepair_tasksheet where (delete_flag is null or delete_flag = 0)
+        <if test="hospId !=null and hospId !=''">
+            and hosp_ID = #{hospId}
+        </if>
+        <if test="decTime != null and decTime != '' ">
+            <if test="decTime == '今天' ">
+                and to_days(create_time) = to_days(now())
+            </if>
+            <if test="decTime == '本周' ">
+                and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(create_time)
+            </if>
+            <if test="decTime == '本月' ">
+                and DATE_FORMAT(create_time,'%Y%m') = DATE_FORMAT(CURDATE(),'%Y%m')
+            </if>
+            <if test="decTime == '本年' ">
+                and YEAR(create_time)=YEAR(NOW())
+            </if>
+        </if>
+        ) a
+        LEFT JOIN
+        (select MAX(tasksheet_state) as tasksheet_state,tasksheet_id from tb_equipmentrepair_tasksheet_statetrack where (delete_flag is null or delete_flag = 0) GROUP BY tasksheet_id)b
+        on a.id = b.tasksheet_id
+        where
+        b.tasksheet_state &gt;= 5
+    </select>
+
+
+
+</mapper>

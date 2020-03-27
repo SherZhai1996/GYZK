@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.ujs.lp.intells.common.dao.hosp.HospMapper">
+
+    <resultMap id="selectHospMainMap" type="cn.edu.ujs.lp.intells.common.entity.Hosp.HospMain">
+        <id column="id" property="id" />
+
+        <result column="hosp_code"  property="hospCode"/>
+        <result column="hosp_name"  property="hospName"/>
+        <result column="pid" property="Pid"/>
+        <result column="cid" property="Cid"/>
+        <result column="county_id" property="CountyId"/>
+        <result column="hosp_detail_address" property="hospDetailaddress"/>
+        <result column="hosp_president" property="hospPresident"/>
+        <result column="hosp_president_tel" property="hospPresidentTel"/>
+        <result column="hosp_president_ID" property="hospPresidentID"/>
+
+        <result column="hosp_legal_name" property="hospLegalName"/>
+        <result column="hosp_centerX" property="hospCenterX"/>
+        <result column="hosp_centerY" property="hospCenterY"/>
+        <result column="hosp_radius" property="hospRadius"/>
+        <result column="hosp_picture" property="hospPicture"/>
+
+        <result column="userId"  property="userId"/>
+        <result column="userName"  property="userName"/>
+        <result column="userSex"  property="userSex"/>
+        <result column="userMobile" property="userMobile"/>
+
+        <result column="createBy" property="createBy"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="remark" property="remark"/>
+
+        <collection property="hospFunctions" ofType="cn.edu.ujs.lp.intells.common.entity.Hosp.HospFunctionBrief">
+            <id column="fid"></id>
+            <result column="function_id" property="functionId"></result>
+            <result column="functionname" property="functionName"></result>
+        </collection>
+    </resultMap>
+
+
+    <resultMap id="selectHospMap" type="cn.edu.ujs.lp.intells.common.entity.Hosp.Hosp">
+        <id column="id" property="id" />
+
+        <result column="hosp_code"  property="hospCode"/>
+        <result column="hosp_name"  property="hospName"/>
+
+        <result column="pid" property="Pid"/>
+        <result column="cid" property="Cid"/>
+        <result column="county_id" property="CountyId"/>
+
+        <result column="hosp_detail_address" property="hospDetailaddress"/>
+        <result column="hosp_president" property="hospPresident"/>
+        <result column="hosp_president_tel" property="hospPresidentTel"/>
+        <result column="hosp_president_ID" property="hospPresidentID"/>
+        <result column="hosp_legal_name" property="hospLegalName"/>
+        <result column="hosp_picture" property="hospPicture"/>
+
+        <result column="hosp_certificate_number" property="hospCertificateNumber"/>
+        <result column="hosp_build_date" property="hospBuildDate"/>
+        <result column="hosp_authorized_strength" property="hospAuthorizedStrength"/>
+        <result column="hosp_build_area" property="hospBuildArea"/>
+        <result column="hosp_emergency_area" property="hospEmergencyArea"/>
+        <result column="hosp_bed_amount" property="hospBedAmount"/>
+        <result column="hosp_outpatient_volume" property="hospOutpatientVolume"/>
+        <result column="hosp_parking_amount" property="hospParkingAmount"/>
+        <result column="hosp_police_amount" property="hospPoliceAmount"/>
+        <result column="hosp_security_amount" property="hospSecurityAmount"/>
+        <result column="hosp_security_company_id" property="hospSecurityCompanyId"/>
+        <result column="hosp_representative" property="hospRepresentative"/>
+        <result column="hosp_main_leadership_team" property="hospLeadershipTeam"/>
+        <result column="hosp_affair_chief" property="hospAffairChief"/>
+        <result column="hosp_affair_chief_mobile" property="hospAffairChiefMobile"/>
+        <result column="hosp_affair_chief_tel" property="hospAffairChiefTel"/>
+        <result column="hosp_affair_chief_email" property="hospAffairChiefEmail"/>
+        <result column="hosp_security_chief" property="hospSecurityChief"/>
+        <result column="hosp_security_chief_mobile" property="hospSecurityChiefMobile"/>
+        <result column="hosp_badge" property="hospBadge"/>
+        <result column="hosp_introduction" property="hospIntroduction"/>
+        <result column="hosp_serve_center_tel" property="hospServeCenterTel"/>
+        <result column="hosp_centerX" property="hospCenterX"/>
+        <result column="hosp_centerY" property="hospCenterY"/>
+        <result column="hosp_radius" property="hospRadius"/>
+
+        <result column="createBy" property="createBy"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="remark" property="remark"/>
+
+        <collection property="hospFunctions" ofType="cn.edu.ujs.lp.intells.common.entity.Hosp.HospFunctionBrief">
+            <id column="fid"></id>
+            <result column="function_id" property="functionId"></result>
+            <result column="functionname" property="functionName"></result>
+        </collection>
+
+    </resultMap>
+
+    <!--依据医院ID或编码获取医院系统管理属性对象-->
+    <select id="getHospMainbyid" resultMap="selectHospMainMap">
+        SELECT
+        a.id as id,
+
+        hosp_code,
+        hosp_name,
+        pid,
+        cid,
+        county_id,
+        hosp_detail_address,
+        hosp_president,
+        hosp_president_tel,
+        hosp_president_ID,
+        hosp_legal_name,
+        hosp_centerX,
+        hosp_centerY,
+        hosp_radius,
+        hosp_picture,
+
+        g.id as userId,
+        g.user_name as userName,
+        g.user_sex as userSex,
+        g.user_mobile as userMobile,
+
+        a.create_by as createBy,
+        a.create_time as createTime,
+        a.update_time as updateTime,
+        a.remark as remark,
+
+        b.id as fid,
+        function_id,
+	    functionname
+
+        FROM
+        tb_hospital_basic_information a
+        LEFT JOIN tb_hosp_functionlist b ON a.id = b.hosp_id AND ((b.delete_flag is null) OR b.delete_flag = 0)
+        LEFT JOIN tb_hospFunctions c ON c.id = b.function_id AND ((c.delete_flag is null) OR c.delete_flag = 0)
+        LEFT JOIN
+        (select d.id as id ,user_name,user_sex,user_mobile,hosp_ID
+        from (select id,user_name,user_sex,user_mobile,hosp_ID from tb_user
+        where (hosp_ID is not null) and user_type=1 and ((delete_flag is null) OR delete_flag=0)) as d
+        LEFT JOIN tb_user_role e ON e.user_id=d.id  and ((e.delete_flag is null) OR e.delete_flag=0) and (e.role_id="004")
+        ) as g on g.hosp_ID=a.id
+
+        WHERE
+        ((a.delete_flag is null) OR a.delete_flag = 0)
+        <if test="Id!=null and Id!=''">
+            AND a.id = #{Id}
+        </if>
+        <if test="hospCode!=null and hospCode!=''">
+            AND a.hosp_code = #{hospCode}
+        </if>
+        ORDER BY
+        hosp_code asc
+    </select>
+
+    <!--依据医院ID或编码获取医院系统管理属性对象-->
+    <select id="getHospMainbyName" resultMap="selectHospMainMap">
+        SELECT
+        a.id as id,
+
+        hosp_code,
+        hosp_name,
+        pid,
+        cid,
+        county_id,
+        hosp_detail_address,
+        hosp_president,
+        hosp_president_tel,
+        hosp_president_ID,
+        hosp_legal_name,
+        hosp_centerX,
+        hosp_centerY,
+        hosp_radius,
+        hosp_picture,
+
+        g.id as userId,
+        g.user_name as userName,
+        g.user_sex as userSex,
+        g.user_mobile as userMobile,
+
+        a.create_by as createBy,
+        a.create_time as createTime,
+        a.update_time as updateTime,
+        a.remark as remark,
+
+        b.id as fid,
+        function_id,
+        functionname
+
+        FROM
+        tb_hospital_basic_information a
+        LEFT JOIN tb_hosp_functionlist b ON a.id = b.hosp_id AND ((b.delete_flag is null) OR b.delete_flag = 0)
+        LEFT JOIN tb_hospFunctions c ON c.id = b.function_id AND ((c.delete_flag is null) OR c.delete_flag = 0)
+        LEFT JOIN
+        (select d.id as id, user_name,user_sex,user_mobile,hosp_ID
+        from (select id,user_name,user_sex,user_mobile,hosp_ID from tb_user
+        where (hosp_ID is not null) and user_type=1 and ((delete_flag is null) OR delete_flag=0)) as d
+        LEFT JOIN tb_user_role e ON e.user_id=d.id  and ((e.delete_flag is null) OR e.delete_flag=0)
+        LEFT JOIN tb_role f ON f.id = e.role_id and ((f.delete_flag is null) OR f.delete_flag=0)
+        where f.role_name="医院系统管理员"
+        ) as g on g.hosp_ID=a.id
+
+        WHERE
+        ((a.delete_flag is null) OR a.delete_flag = 0)
+        <if test="hospName!=null and hospName!=''">
+            AND a.hosp_name = #{hospName}
+        </if>
+        ORDER BY
+        hosp_code asc
+    </select>
+
+    <!--依据医院ID或医院编码获取医院完整对象信息-->
+    <select id="getHospbyid" resultMap="selectHospMap">
+        SELECT
+        a.id as id,
+
+        hosp_code,
+        hosp_name,
+
+        pid,
+        cid,
+        county_id,
+
+        hosp_detail_address,
+        hosp_president,
+        hosp_president_tel,
+        hosp_president_ID,
+        hosp_legal_name,
+        hosp_picture,
+
+        hosp_certificate_number,
+        hosp_build_date,
+        hosp_authorized_strength,
+        hosp_build_area,
+        hosp_emergency_area,
+        hosp_bed_amount,
+        hosp_outpatient_volume,
+        hosp_parking_amount,
+        hosp_police_amount,
+        hosp_security_amount,
+        hosp_security_company_id,
+        hosp_representative,
+        hosp_main_leadership_team,
+        hosp_affair_chief,
+        hosp_affair_chief_mobile,
+        hosp_affair_chief_tel,
+        hosp_affair_chief_email,
+        hosp_security_chief,
+        hosp_security_chief_mobile,
+        hosp_badge,
+        hosp_introduction,
+        hosp_serve_center_tel,
+        hosp_centerX,
+        hosp_centerY,
+        hosp_radius,
+
+        a.create_by as createBy,
+        a.create_time as createTime,
+        a.update_time as updateTime,
+        a.remark as remark,
+
+        b.id as fid,
+        function_id,
+	    functionname
+
+        FROM
+        tb_hospital_basic_information a
+        LEFT JOIN tb_hosp_functionlist b ON a.id = b.hosp_id AND ((b.delete_flag is null) OR b.delete_flag = 0)
+        LEFT JOIN tb_hospFunctions c ON c.id = b.function_id AND ((c.delete_flag is null) OR c.delete_flag = 0)
+
+        WHERE
+        ((a.delete_flag is null) OR a.delete_flag = 0)
+        <if test="Id!=null and Id!=''">
+            AND a.id = #{Id}
+        </if>
+        <if test="hospCode!=null and hospCode!=''">
+            AND a.hosp_code = #{hospCode}
+        </if>
+        ORDER BY
+        hosp_code asc
+    </select>
+
+    <!--依据医院ID或医院编码删除医院记录-->
+    <update id="delete" parameterType="java.lang.String">
+    UPDATE tb_hospital_basic_information a SET delete_flag = 1
+    WHERE
+        <if test="Id!=null and Id!=''">
+            id = #{Id}
+        </if>
+        <if test="hospCode!=null and hospCode!=''">
+            AND hosp_code = #{hospCode}
+        </if>
+    </update>
+
+    <!-- 依据记录ID或医院ID删除医院参数 -->
+    <delete id="deleteHospParams" parameterType="java.lang.String" statementType="CALLABLE">
+		{call deleteHospParams(#{Id,mode=IN},#{hospId,mode=IN})}
+	</delete>
+
+    <!-- 依据记录ID或医院ID删除医院功能配置 -->
+    <delete id="deleteHospFunctionlist" parameterType="java.lang.String" statementType="CALLABLE">
+		{call deleteHospFunctionlist(#{Id,mode=IN},#{hospId,mode=IN})}
+	</delete>
+
+    <!--依据省市ID和医院名称进行医院记录分页查询-->
+    <select id="page" resultType="cn.edu.ujs.lp.intells.common.entity.Hosp.HospBrief">
+        SELECT
+        a.id as id,
+
+        a.hosp_code as hospCode,
+        a.hosp_name as hospName,
+        a.pid as Pid,
+        a.cid as Cid,
+        a.county_id as CountyId,
+        a.hosp_detail_address as hospDetailaddress,
+        a.hosp_president as hospPresident,
+        a.hosp_legal_name as hospLegalname,
+        a.hosp_centerX as hospCenterX,
+        a.hosp_centerY as hospCenterY,
+        a.hosp_url as hospUrl,
+        a.hosp_badge as hospBadge,
+        a.hosp_picture as hospPicture,
+        a.hosp_serve_center_tel as hospServeCenterTel,
+
+        g.id as userId,
+        g.user_name as userName,
+        g.user_sex as userSex,
+        g.user_mobile as userMobile,
+
+        a.remark as remark
+
+        FROM
+        tb_hospital_basic_information as a
+        LEFT JOIN
+        (select d.id as id ,user_name,user_sex,user_mobile,hosp_ID
+        from (select id,user_name,user_sex,user_mobile,hosp_ID from tb_user
+        where (hosp_ID is not null) and user_type=1 and ((delete_flag is null) OR delete_flag=0)) as d
+        LEFT JOIN tb_user_role e ON e.user_id=d.id  and ((e.delete_flag is null) OR e.delete_flag=0) and (e.role_id="004")
+        ) as g on g.hosp_ID=a.id
+
+        WHERE
+        ((a.delete_flag is null) OR a.delete_flag = 0)
+        <if test="hospName!=null and hospName!=''">
+            AND a.hosp_name LIKE CONCAT('%',#{hospName},'%')
+        </if>
+        <if test="pId!=null and pId!=''">
+            AND a.pid=#{pId}
+        </if>
+        <if test="cId!=null and cId!=''">
+            AND a.cid=#{cId}
+        </if>
+        ORDER BY
+        a.update_time desc
+    </select>
+
+    <!--依据省市ID和医院名称进行医院记录分页查询-->
+    <select id="Rcount" resultType="Long">
+        SELECT
+        count(*) as rcount
+
+        FROM
+        tb_hospital_basic_information
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        <if test="hospName!=null and hospName!=''">
+            AND hosp_name LIKE CONCAT('%',#{hospName},'%')
+        </if>
+        <if test="pId!=null and pId!=''">
+            AND pid=#{pId}
+        </if>
+        <if test="cId!=null and cId!=''">
+            AND cid=#{cId}
+        </if>
+        ORDER BY
+        update_time asc
+    </select>
+
+
+    <!-- 依据医院ID或医院编码获取医院参数对象列表-->
+    <select id="listparams" resultType="cn.edu.ujs.lp.intells.common.entity.Hosp.HospParamsBrief">
+        SELECT
+        a.id as id,
+
+        clearinspectionmode,
+        isCenterdispatchedworker,
+        isCenterdispatchedworkerForDevice,
+        isCenterdispatchedworkerForClearinspection,
+        isCenterdispatchedworkerForSecurityinspection,
+        dispatchedworkerinterval,
+        evaluateinterval,
+        hosp_ID as hospID
+
+        FROM
+        tb_hosp_params a JOIN tb_hospital_basic_information b ON a.hosp_ID = b.id AND ((b.delete_flag is null) OR b.delete_flag = 0)
+        WHERE
+        ((a.delete_flag is null) OR a.delete_flag = 0)
+        <if test="hospCode!=null and hospCode!=''">
+            AND b.hosp_code LIKE CONCAT('%',#{hospCode},'%')
+        </if>
+        <if test="hospId!=null and hospId!=''">
+            AND a.hosp_ID LIKE CONCAT('%',#{hospId},'%')
+        </if>
+
+    </select>
+
+    <!-- 依据记录ID获取医院参数对象 -->
+    <select id="getHospParamsbyid" resultType="cn.edu.ujs.lp.intells.common.entity.Hosp.HospParams">
+        SELECT
+        id,
+
+        clearinspectionmode,
+        isCenterdispatchedworker,
+        isCenterdispatchedworkerForDevice,
+        isCenterdispatchedworkerForClearinspection,
+        isCenterdispatchedworkerForSecurityinspection,
+        dispatchedworkerinterval,
+        evaluateinterval,
+
+        hosp_ID as hospID,
+
+        create_by as createBy,
+        create_time as createTime,
+        update_time as updateTime,
+        remark as remark
+        FROM
+        tb_hosp_params
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        <if test="Id!=null and Id!=''">
+            AND id = #{Id}
+        </if>
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID = #{hospId}
+        </if>
+    </select>
+
+</mapper>

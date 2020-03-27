@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.ujs.lp.intells.basicinformation.dao.hosp.GridMapper">
+
+    <!-- 网格区域的完整数据对象 -->
+    <resultMap id="selectGridMap" type="cn.edu.ujs.lp.intells.basicinformation.entity.Hosp.Grid">
+        <id column="id" property="id" />
+
+        <result column="gridCode"  property="gridCode"/>
+        <result column="gridName"  property="gridName"/>
+        <result column="superiorGridid" property="superiorGridid"/>
+        <result column="deptId" property="deptId"/>
+        <result column="gridLevel" property="gridLevel"/>
+        <result column="gridArea" property="gridArea"/>
+        <result column="gridPlaceclassid" property="gridPlaceclassid"/>
+        <result column="gridPicture" property="gridPicture"/>
+        <result column="gridFullname" property="gridFullname"/>
+
+        <result column="gridLeaderID" property="gridLeaderID"/>
+        <result column="gridLeaderName" property="gridLeaderName"/>
+        <result column="gridLeaderTel" property="gridLeaderTel"/>
+
+        <result column="gridcenterX" property="gridcenterX"/>
+        <result column="gridcenterY" property="gridcenterY"/>
+        <result column="gridradius" property="gridradius"/>
+
+        <result column="hospID" property="hospID"/>
+
+        <result column="createBy" property="createBy"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="remark" property="remark"/>
+
+        <collection property="gridTels" ofType="cn.edu.ujs.lp.intells.basicinformation.entity.Hosp.GridTelBrief">
+            <id column="tid"></id>
+            <result column="gridTel" property="gridTel"></result>
+        </collection>
+    </resultMap>
+
+
+    <!-- 网格区域的二维码对象 -->
+    <resultMap id="selectGridQRMap" type="cn.edu.ujs.lp.intells.basicinformation.entity.Hosp.GridQRBrief">
+        <id column="id" property="id" />
+
+        <result column="gridCode"  property="gridCode"/>
+        <result column="gridName"  property="gridName"/>
+        <result column="gridFullname" property="gridFullname"/>
+        <result column="gridPlaceclassid" property="gridPlaceclassid"/>
+
+        <collection property="gridExteams" ofType="cn.edu.ujs.lp.intells.basicinformation.entity.Hosp.GridExteam">
+            <id column="serviceId" property="serviceId"></id>
+            <result column="exteamName" property="exteamName"></result>
+        </collection>
+    </resultMap>
+
+
+    <!-- 依据网格ID或网格编号获取网格完整对象列表 -->
+    <select id="getbyid" resultMap="selectGridMap">
+        SELECT
+        a.id as id,
+
+        grid_code as gridCode,
+        grid_name as gridName,
+        superior_grid_id as superiorGridid,
+        dept_id as deptId,
+        grid_level as gridLevel,
+        grid_area as gridArea,
+        grid_placeclass_id as gridPlaceclassid,
+        grid_picture as gridPicture,
+        grid_fullname as gridFullname,
+
+        grid_leader_ID as gridLeaderID,
+        grid_leader_tel as gridLeaderTel,
+        grid_leader_name as gridLeaderName,
+
+        grid_centerX as gridcenterX,
+        grid_centerY as gridcenterY,
+        grid_radius as gridradius,
+
+        hosp_ID as hospID,
+
+        a.create_by as createBy,
+        a.create_time as createTime,
+        a.update_time as updateTime,
+        a.remark as remark,
+
+	    c.id as tid,
+        c.grid_id as tgridId,
+	    c.grid_tel as gridTel
+
+        FROM
+        tb_grid a
+            LEFT JOIN tb_grid_tel c ON a.id = c.grid_id AND ((c.delete_flag is null) OR c.delete_flag = 0)
+
+        WHERE
+            ((a.delete_flag is null) OR a.delete_flag = 0)
+            AND a.id = #{Id}
+        ORDER BY
+        a.update_time desc
+    </select>
+
+    <!-- 依据上级网格ID和网格名称获取网格对象列表 -->
+    <select id="findGridBysuperIDandGridName" resultMap="selectGridMap">
+        SELECT
+        a.id as id,
+
+        grid_code as gridCode,
+        grid_name as gridName,
+        superior_grid_id as superiorGridid,
+        dept_id as deptId,
+        grid_level as gridLevel,
+        grid_area as gridArea,
+        grid_placeclass_id as gridPlaceclassid,
+        grid_picture as gridPicture,
+        grid_fullname as gridFullname,
+
+        grid_leader_ID as gridLeaderID,
+        grid_leader_tel as gridLeaderTel,
+        grid_leader_name as gridLeaderName,
+
+        grid_centerX as gridcenterX,
+        grid_centerY as gridcenterY,
+        grid_radius as gridradius,
+
+        hosp_ID as hospID,
+
+        a.create_by as createBy,
+        a.create_time as createTime,
+        a.update_time as updateTime,
+        a.remark as remark,
+
+        c.id as tid,
+        c.grid_id as tgridId,
+        c.grid_tel as gridTel
+
+        FROM
+        tb_grid a
+            LEFT JOIN tb_grid_tel c ON a.id = c.grid_id AND ((c.delete_flag is null) OR c.delete_flag = 0)
+
+        WHERE
+        ((a.delete_flag is null) OR a.delete_flag = 0)
+        <if test="hospId!=null and hospId!=''">
+            AND a.hosp_ID = #{hospId}
+        </if>
+
+        <if test="superiorGridid!=null and superiorGridid!=''">
+            AND a.superior_grid_id = #{superiorGridid}
+        </if>
+
+        <if test="gridName!=null and gridName!=''">
+            AND a.grid_name = #{gridName}
+        </if>
+        ORDER BY
+        a.update_time desc
+    </select>
+
+    <!-- 依据网格全名获取网格对象列表 -->
+    <select id="getbyFullname" resultMap="selectGridMap">
+        SELECT
+        a.id as id,
+
+        grid_code as gridCode,
+        grid_name as gridName,
+        superior_grid_id as superiorGridid,
+        dept_id as deptId,
+        grid_level as gridLevel,
+        grid_area as gridArea,
+        grid_placeclass_id as gridPlaceclassid,
+        grid_picture as gridPicture,
+        grid_fullname as gridFullname,
+
+        grid_leader_ID as gridLeaderID,
+        grid_leader_tel as gridLeaderTel,
+        grid_leader_name as gridLeaderName,
+
+        grid_centerX as gridcenterX,
+        grid_centerY as gridcenterY,
+        grid_radius as gridradius,
+
+        hosp_ID as hospID,
+
+        a.create_by as createBy,
+        a.create_time as createTime,
+        a.update_time as updateTime,
+        a.remark as remark,
+
+        c.id as tid,
+        c.grid_id as tgridId,
+        c.grid_tel as gridTel
+
+        FROM
+        tb_grid a
+        LEFT JOIN tb_grid_tel c ON a.id = c.grid_id AND ((c.delete_flag is null) OR c.delete_flag = 0)
+
+        WHERE
+            ((a.delete_flag is null) OR a.delete_flag = 0)
+            <if test="hospId!=null and hospId!=''">
+                AND hosp_ID = #{hospId}
+            </if>
+
+            <if test="gridFullname!=null and gridFullname!=''">
+                AND a.grid_fullname = #{gridFullname}
+            </if>
+        ORDER BY
+            a.update_time desc
+    </select>
+
+    <!--依据网格ID获取电话记录-->
+    <select id="getTelsbyGridId" resultType="cn.edu.ujs.lp.intells.basicinformation.entity.Hosp.GridTelBrief">
+        SELECT
+        id,
+        grid_id as gridId,
+        grid_tel as gridTel
+
+        FROM
+        tb_grid_tel
+
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0)
+            AND grid_id = #{gridId}
+        ORDER BY
+            update_time desc
+    </select>
+
+
+    <!--依据网格ID获取服务班组记录-->
+    <select id="getExteamsbyGridId" resultType="cn.edu.ujs.lp.intells.basicinformation.entity.Hosp.GridExteamBrief">
+        SELECT
+        a.id,
+        a.team_id as exteamId,
+        b.exteam_fullname as exteamFullname
+
+        FROM
+        (select * from tb_exteam_grid where
+            ((delete_flag is null) OR delete_flag = 0)
+            AND grid_id = #{gridId}
+        ) as a
+        JOIN tb_exteam b ON b.id=a.team_id
+        AND ((b.delete_flag is null) OR b.delete_flag = 0)
+
+        ORDER BY
+            a.update_time desc
+    </select>
+
+    <!-- 依据网格编号删除网格记录 -->
+    <delete id="deleteGridbycode" parameterType="java.lang.String" statementType="CALLABLE">
+		{call delete_grid_bycode(#{gridCode,mode=IN})}
+	</delete>
+
+    <!-- 依据网格ID删除与网格关联的服务班组记录 -->
+    <delete id="clearGridexteam" parameterType="java.lang.String" statementType="CALLABLE">
+		{call Clear_grid_exteam(#{gridid,mode=IN})}
+	</delete>
+
+
+    <!-- 依据医院ID或医院编号获取网格对象列表，分页查询 -->
+    <select id="getQRlist" resultMap="selectGridQRMap">
+        SELECT
+        a.id as id,
+        a.grid_name as gridName,
+        a.grid_code as gridCode,
+        a.grid_fullname as gridFullname,
+        a.grid_placeclass_id as gridPlaceclassid,
+        c.exteam_name as exteamName,
+        c.service_id as serviceId
+
+        FROM
+        tb_grid a
+        JOIN tb_exteam_grid b ON a.grid_code like concat(b.grid_code,"%")
+        AND ((b.delete_flag is null) OR b.delete_flag = 0)
+        JOIN tb_exteam c ON c.id=b.team_id
+        AND ((c.service_id="02") or (c.service_id="04") or (c.service_id="05")) AND ((c.delete_flag is null) OR c.delete_flag = 0)
+        WHERE
+        ((a.delete_flag is null) OR a.delete_flag = 0) AND (grid_placeclass_id is not null)
+
+        <if test="hospId!=null and hospId!=''">
+            AND a.hosp_ID = #{hospId}
+        </if>
+        <if test="gridCode!=null and gridCode!=''">
+            AND a.grid_code LIKE CONCAT(#{gridCode},'%')
+        </if>
+        ORDER BY
+            a.grid_code asc
+    </select>
+
+    <!-- 依据医院ID或医院编号获取网格对象列表，分页查询 -->
+    <select id="Rcount" resultType="Long">
+        SELECT
+        count(*) as rcount
+
+        FROM
+        tb_grid
+
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+
+        AND hosp_ID = #{hospId}
+
+        <if test="gridFullname!=null and gridFullname!=''">
+            AND grid_fullname LIKE CONCAT('%',#{gridFullname},'%')
+        </if>
+        <if test="deptId!=null and deptId!=''">
+            AND dept_id = #{deptId}
+        </if>
+        <if test="superiorGridid!=null and superiorGridid!=''">
+            AND ((superior_grid_id = #{superiorGridid}) or (id = #{superiorGridid}))
+        </if>
+
+    </select>
+
+    <!-- 依据医院ID或医院编号获取网格对象列表，分页查询 -->
+    <select id="page" resultType="cn.edu.ujs.lp.intells.common.entity.Hosp.GridBrief">
+        SELECT
+        a.id,
+
+        grid_code as gridCode,
+        grid_name as gridName,
+        superior_grid_id as superiorGridid,
+        dept_id as deptId,
+        b.dept_name as deptName,
+        grid_level as gridLevel,
+        grid_area as gridArea,
+        grid_placeclass_id as gridPlaceclassid,
+        grid_fullname as gridFullname
+
+        FROM
+        tb_grid a
+        LEFT JOIN (select id,dept_name from tb_department where ((delete_flag is null) or delete_flag=0)) as b on b.id=a.dept_id
+
+        WHERE
+        ((a.delete_flag is null) OR a.delete_flag = 0)
+        AND a.hosp_ID = #{hospId}
+
+        <if test="gridFullname!=null and gridFullname!=''">
+            AND grid_fullname LIKE CONCAT('%',#{gridFullname},'%')
+        </if>
+        <if test="deptId!=null and deptId!=''">
+            AND dept_id = #{deptId}
+        </if>
+        <if test="superiorGridid!=null and superiorGridid!=''">
+            AND ((superior_grid_id = #{superiorGridid}) or (a.id = #{superiorGridid}))
+        </if>
+
+        ORDER BY
+        a.grid_code asc
+    </select>
+</mapper>

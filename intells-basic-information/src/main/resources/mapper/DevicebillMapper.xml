@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.ujs.lp.intells.basicinformation.dao.Device.DevicebillMapper">
+    <!-- 网格区域的完整数据对象 -->
+    <resultMap id="selectDevicebillMap" type="cn.edu.ujs.lp.intells.basicinformation.entity.Device.Devicebill">
+        <id column="id" property="id" />
+
+        <result column="deviceCode"  property="deviceCode"/>
+        <result column="assetCode"  property="assetCode"/>
+        <result column="assetName" property="assetName"/>
+        <result column="modelSpec" property="modelSpec"/>
+        <result column="deviceCategory" property="deviceCategory"/>
+        <result column="isUsing" property="isUsing"/>
+        <result column="useStatus" property="useStatus"/>
+        <result column="enableDate" property="enableDate"/>
+        <result column="serviceLife" property="serviceLife"/>
+        <result column="repairExpire"  property="repairExpire"/>
+        <result column="administrators"  property="administrators"/>
+        <result column="taskOwner" property="taskOwner"/>
+        <result column="gridId" property="gridId"/>
+        <result column="dposition" property="dposition"/>
+        <result column="configuration" property="configuration"/>
+        <result column="brand" property="brand"/>
+        <result column="isMedicaluse" property="isMedicaluse"/>
+        <result column="measurementUnit" property="measurementUnit"/>
+        <result column="equipmentValue"  property="equipmentValue"/>
+        <result column="assetSource"  property="assetSource"/>
+        <result column="isImported" property="isImported"/>
+        <result column="supplier" property="supplier"/>
+        <result column="supplierContract" property="supplierContract"/>
+        <result column="supplierTel" property="supplierTel"/>
+        <result column="manufacturer" property="manufacturer"/>
+        <result column="productionPlace" property="productionPlace"/>
+        <result column="aftersaleTel" property="aftersaleTel"/>
+
+        <result column="aftersaleEngineer"  property="aftersaleEngineer"/>
+        <result column="dateProduction"  property="dateProduction"/>
+        <result column="factoryCode" property="factoryCode"/>
+        <result column="isAccessory" property="isAccessory"/>
+        <result column="accessoryClass" property="accessoryClass"/>
+        <result column="isSpecial" property="isSpecial"/>
+        <result column="specialClass" property="specialClass"/>
+        <result column="isEmergency" property="isEmergency"/>
+        <result column="emergencyClass" property="emergencyClass"/>
+        <result column="devicePic" property="devicePic"/>
+
+        <result column="hospID" property="hospID"/>
+
+        <result column="createBy" property="createBy"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="remark" property="remark"/>
+
+    </resultMap>
+
+    <select id="getbyid" resultMap="selectDevicebillMap">
+        SELECT
+        id,
+
+        <!-- 作为主要属性考虑 -->
+        device_code as deviceCode,
+        assetcode as assetCode,
+        assetname as assetName,
+        modelspec as modelSpec,
+        devicecategory as deviceCategory,
+        isusing as isUsing,
+        use_status as useStatus,
+        enabledate as enableDate,
+        service_life as serviceLife,
+        repair_expire as repairExpire,
+        administrators as administrators,
+        task_owner as taskOwner,
+
+        grid_id as gridId,
+        dposition as dposition,
+        configuration as configuration,
+        brand as brand,
+        ismedicaluse as isMedicaluse,
+        measurementunit as measurementUnit,
+        equipment_value as equipmentValue,
+
+        assetsource as assetSource,
+        isimported as isImported,
+        supplier as supplier,
+        suppliercontract as supplierContract,
+        suppliertel as supplierTel,
+        manufacturer as manufacturer,
+        productionplace as productionPlace,
+        aftersaletel as aftersaleTel,
+        aftersaleengineer as aftersaleEngineer,
+
+        <!-- 作为次要属性考虑 -->
+        dateproduction as dateProduction,
+        factorycode as factoryCode,
+        isaccessory as isAccessory,
+        accessoryclass as accessoryClass,
+        isspecial as isSpecial,
+        specialclass as specialClass,
+        isemergency as isEmergency,
+        emergencyclass as emergencyClass,
+
+        devicepic as devicePic,
+
+        <!-- 作为公共属性考虑 -->
+        hosp_ID as HospID,
+
+        create_by as createBy,
+        create_time as createTime,
+        update_time as updateTime,
+        remark as remark
+
+        FROM
+        tb_devicebill
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        <if test="id!=null and id!=''">
+            AND id = #{id}
+        </if>
+        ORDER BY
+        update_time desc
+    </select>
+
+    <select id="findByCategoryandName" resultMap="selectDevicebillMap">
+        SELECT
+        id,
+
+        <!-- 作为主要属性考虑 -->
+        device_code as deviceCode,
+        assetcode as assetCode,
+        assetname as assetName,
+        modelspec as modelSpec,
+        devicecategory as deviceCategory,
+        isusing as isUsing,
+        use_status as useStatus,
+        enabledate as enableDate,
+        service_life as serviceLife,
+        repair_expire as repairExpire,
+        administrators as administrators,
+        task_owner as taskOwner,
+
+        grid_id as gridId,
+        dposition as dposition,
+        configuration as configuration,
+        brand as brand,
+        ismedicaluse as isMedicaluse,
+        measurementunit as measurementUnit,
+        equipment_value as equipmentValue,
+
+        assetsource as assetSource,
+        isimported as isImported,
+        supplier as supplier,
+        suppliercontract as supplierContract,
+        suppliertel as supplierTel,
+        manufacturer as manufacturer,
+        productionplace as productionPlace,
+        aftersaletel as aftersaleTel,
+        aftersaleengineer as aftersaleEngineer,
+
+        <!-- 作为次要属性考虑 -->
+        dateproduction as dateProduction,
+        factorycode as factoryCode,
+        isaccessory as isAccessory,
+        accessoryclass as accessoryClass,
+        isspecial as isSpecial,
+        specialclass as specialClass,
+        isemergency as isEmergency,
+        emergencyclass as emergencyClass,
+
+        devicepic as devicePic,
+
+        <!-- 作为公共属性考虑 -->
+        hosp_ID as HospID,
+
+        create_by as createBy,
+        create_time as createTime,
+        update_time as updateTime,
+        remark as remark
+
+        FROM
+        tb_devicebill
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID = #{hospId}
+        </if>
+
+        <choose>
+            <when test="deviceCategory!=null and deviceCategory!=''">
+                AND devicecategory = #{deviceCategory}
+                <if test="assetName!=null and assetName!=''">
+                    AND assetname = #{assetName}
+                </if>
+            </when>
+            <otherwise>
+                AND (devicecategory is null)
+            </otherwise>
+        </choose>
+
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据设备ID删除设备相关记录 -->
+    <delete id="delete" parameterType="java.lang.String" statementType="CALLABLE">
+		{call delete_devicebill(#{devicebillid,mode=IN})}
+	</delete>
+
+    <select id="Rcount" resultType="Long">
+        SELECT
+        count(*) as rcount
+
+        FROM
+        tb_devicebill
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID = #{hospId}
+        </if>
+        <if test="deviceCategory!=null and deviceCategory!=''">
+            AND devicecategory = #{deviceCategory}
+        </if>
+
+        <if test="assetName!=null and assetName!=''">
+            AND assetname LIKE CONCAT('%',#{assetName},'%')
+        </if>
+    </select>
+
+    <select id="page" resultType="cn.edu.ujs.lp.intells.common.entity.Device.DevicebillBrief">
+        SELECT
+        id,
+
+        <!-- 作为主要属性考虑 -->
+        device_code as deviceCode,
+        assetcode as assetCode,
+        assetname as assetName,
+        modelspec as modelSpec,
+        devicecategory as deviceCategory,
+        isusing as isUsing,
+        use_status as useStatus,
+        enabledate as enableDate,
+        service_life as serviceLife,
+        repair_expire as repairExpire,
+        administrators as administrators,
+        task_owner as taskOwner,
+
+        grid_id as gridId,
+        dposition as dposition,
+        configuration as configuration,
+        brand as brand,
+        ismedicaluse as isMedicaluse,
+        measurementunit as measurementUnit,
+        equipment_value as equipmentValue,
+
+        assetsource as assetSource,
+        isimported as isImported,
+        supplier as supplier,
+        suppliercontract as supplierContract,
+        suppliertel as supplierTel,
+        manufacturer as manufacturer,
+        productionplace as productionPlace,
+        aftersaletel as aftersaleTel,
+        aftersaleengineer as aftersaleEngineer
+
+        FROM
+        tb_devicebill
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID = #{hospId}
+        </if>
+        <if test="deviceCategory!=null and deviceCategory!=''">
+            AND devicecategory = #{deviceCategory}
+        </if>
+
+        <if test="assetName!=null and assetName!=''">
+            AND assetname LIKE CONCAT('%',#{assetName},'%')
+        </if>
+        ORDER BY
+        update_time desc
+    </select>
+</mapper>

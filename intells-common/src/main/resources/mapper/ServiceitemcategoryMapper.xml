@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.ujs.lp.intells.common.dao.Serviceitem.ServiceitemcategoryMapper">
+
+    <select id="getbyid" resultType="cn.edu.ujs.lp.intells.common.entity.Serviceitem.Serviceitemcategory">
+        SELECT
+        id,
+
+        serviceitemcategory_name as serviceitemcategoryName,
+	    serviceitemcategory_code as serviceitemcategoryCode,
+	    superior_id as superiorId,
+	    service_type_id as serviceTypeId,
+	    serviceitemcategory_level as serviceitemcategoryLevel,
+	    serviceitemcategory_fullname as serviceitemcategoryFullname,
+
+        hosp_ID as hospID,
+
+        create_by as createBy,
+        create_time as createTime,
+        update_time as updateTime,
+        remark as remark
+        FROM
+        tb_serviceitemcategory
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        AND id = #{Id}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <select id="findByName" resultType="cn.edu.ujs.lp.intells.common.entity.Serviceitem.Serviceitemcategory">
+        SELECT
+        id,
+
+        serviceitemcategory_name as serviceitemcategoryName,
+        serviceitemcategory_code as serviceitemcategoryCode,
+        superior_id as superiorId,
+        service_type_id as serviceTypeId,
+        serviceitemcategory_level as serviceitemcategoryLevel,
+        serviceitemcategory_fullname as serviceitemcategoryFullname,
+
+        hosp_ID as HospID,
+
+        create_by as createBy,
+        create_time as createTime,
+        update_time as updateTime,
+        remark as remark
+        FROM
+        tb_serviceitemcategory
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+
+        <if test="superiorId!=null and superiorId!=''">
+            AND superior_id = #{superiorId}
+        </if>
+        AND serviceitemcategory_name = #{serviceitemcategoryName}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <select id="findByFullname" resultType="cn.edu.ujs.lp.intells.common.entity.Serviceitem.Serviceitemcategory">
+        SELECT
+        id,
+
+        serviceitemcategory_name as serviceitemcategoryName,
+        serviceitemcategory_code as serviceitemcategoryCode,
+        superior_id as superiorId,
+        service_type_id as serviceTypeId,
+        serviceitemcategory_level as serviceitemcategoryLevel,
+        serviceitemcategory_fullname as serviceitemcategoryFullname,
+
+        hosp_ID as HospID,
+
+        create_by as createBy,
+        create_time as createTime,
+        update_time as updateTime,
+        remark as remark
+        FROM
+        tb_serviceitemcategory
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+
+        AND serviceitemcategory_fullname = #{serviceitemcategoryFullname}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <select id="GetserviceitemcategoryFullnamebyID" resultType="java.lang.String">
+        SELECT GetserviceitemcategoryFullnamebyID(#{sicId,mode=IN})
+    </select>
+
+    <select id="GetserviceitemcategoryNamebyID" resultType="java.lang.String">
+        SELECT GetserviceitemcategoryNamebyID(#{sicId,mode=IN})
+    </select>
+
+    <!-- 依据设备类别编号删除设备类别及设备记录 -->
+    <update id="deletebyCode" parameterType="java.lang.String" statementType="CALLABLE">
+		{call delete_serviceitemcategory(#{serviceitemcategorycode,mode=IN})}
+	</update>
+
+    <select id="list" resultType="cn.edu.ujs.lp.intells.common.entity.Serviceitem.ServiceitemcategoryBrief">
+        SELECT
+        id,
+
+        serviceitemcategory_name as serviceitemcategoryName,
+        serviceitemcategory_code as serviceitemcategoryCode,
+        superior_id as superiorId,
+        service_type_id as serviceTypeId
+
+        FROM
+        tb_serviceitemcategory
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+
+        <if test="serviceitemcategoryName!=null and serviceitemcategoryName!=''">
+            AND serviceitemcategory_name LIKE CONCAT('%',#{serviceitemcategoryName},'%')
+        </if>
+
+        ORDER BY
+        update_time desc
+    </select>
+
+    <select id="Rcount" resultType="Long">
+        SELECT
+        count(*) as rcount
+
+        FROM
+        tb_serviceitemcategory
+
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+
+        <if test="serviceitemcategoryName!=null and serviceitemcategoryName!=''">
+            AND serviceitemcategory_name LIKE CONCAT('%',#{serviceitemcategoryName},'%')
+        </if>
+    </select>
+
+    <select id="page" resultType="cn.edu.ujs.lp.intells.common.entity.Serviceitem.ServiceitemcategoryBrief">
+        SELECT
+        id,
+
+        serviceitemcategory_name as serviceitemcategoryName,
+        serviceitemcategory_code as serviceitemcategoryCode,
+        superior_id as superiorId,
+        service_type_id as serviceTypeId
+
+        FROM
+        tb_serviceitemcategory
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+
+        <if test="serviceitemcategoryName!=null and serviceitemcategoryName!=''">
+            AND serviceitemcategory_name LIKE CONCAT('%',#{serviceitemcategoryName},'%')
+        </if>
+
+        ORDER BY
+        update_time desc
+    </select>
+</mapper>

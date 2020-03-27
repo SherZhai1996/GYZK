@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.ujs.lp.intells.basicinformation.dao.hosp.StaffMapper">
+
+    <!-- 医院职工数据对象 -->
+    <resultMap id="selectStaffMap" type="cn.edu.ujs.lp.intells.basicinformation.entity.Hosp.Staff">
+        <id column="id" property="id" />
+
+        <result column="staffName"  property="staffName"/>
+        <result column="staffSex"  property="staffSex"/>
+        <result column="staffCode" property="staffCode"/>
+        <result column="staffMobile" property="staffMobile"/>
+        <result column="staffBirthday" property="staffBirthday"/>
+        <result column="deptId" property="deptId"/>
+        <result column="deptName" property="deptName"/>
+        <result column="staffTel" property="staffTel"/>
+        <result column="staffAdminisPosition" property="staffAdminisPosition"/>
+        <result column="staffTechnicalPosition" property="staffTechnicalPosition"/>
+        <result column="staffEducationPosition"  property="staffEducationPosition"/>
+        <result column="staffTutorType"  property="staffTutorType"/>
+        <result column="staffDegree" property="staffDegree"/>
+        <result column="staffActivestatus" property="staffActivestatus"/>
+        <result column="isuseMedicalhelp" property="isuseMedicalhelp"/>
+        <result column="openid" property="openid"/>
+
+        <result column="staffLoginName" property="staffLoginName"/>
+        <result column="staffLoginNickname" property="staffLoginNickname"/>
+        <result column="staffLoginPassword" property="staffLoginPassword"/>
+
+        <result column="staffEmail" property="staffEmail"/>
+        <result column="staffWeixin" property="staffWeixin"/>
+        <result column="staffQq" property="staffQq"/>
+        <result column="staffPicture" property="staffPicture"/>
+        <result column="staffIdentification" property="staffIdentification"/>
+        <result column="hospID" property="hospID"/>
+
+        <result column="createBy" property="createBy"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="remark" property="remark"/>
+
+        <collection property="roleIds" ofType="cn.edu.ujs.lp.intells.common.entity.User.UserRoleBrief">
+            <id column="rid"></id>
+            <result column="roleId" property="roleId"></result>
+            <result column="roleName" property="roleName"></result>
+        </collection>
+
+        <collection property="gridIds" ofType="cn.edu.ujs.lp.intells.common.entity.User.UserGridBrief">
+            <id column="gid" ></id>
+            <result column="gridId" property="gridId"></result>
+            <result column="gridFullname" property="gridFullname"></result>
+        </collection>
+    </resultMap>
+
+    <select id="Rcount" resultType="Long">
+        SELECT
+        count(*) as rcount
+        FROM
+        tb_user
+        <where>
+            ((delete_flag is null) or delete_flag=0) AND (user_type = 2)
+            <if test="hospId!=null and hospId!=''">
+                AND hosp_ID =#{hospId}#
+            </if>
+            <if test="staffName!=null and staffName!=''">
+                AND  user_name LIKE CONCAT('%',#{staffName},'%')
+            </if>
+
+            <if test="staffMobile!=null and staffMobile!=''">
+                AND user_mobile = #{staffMobile}
+            </if>
+
+            <if test="staffTel!=null and staffTel!=''">
+                AND staff_tel = #{staffTel}
+            </if>
+
+            <if test="deptId!=null and deptId!=''">
+                AND dept_id = #{deptId}
+            </if>
+        </where>
+    </select>
+
+    <select id="page" resultMap="cn.edu.ujs.lp.intells.common.dao.CommonMapper.selectStaffBriefMap">
+        SELECT
+        a.id as id,
+
+        a.user_name as staffName,
+        a.user_sex as staffSex,
+        a.staff_code as staffCode,
+        a.user_mobile as staffMobile,
+        a.staff_birthday as staffBirthday,
+        a.dept_id as deptId,
+        b.dept_name as deptName,
+        a.staff_tel as staffTel,
+        a.staff_adminis_position as staffAdminisPosition,
+        a.staff_technical_position as staffTechnicalPosition,
+        a.staff_education_position as staffEducationPosition,
+        a.staff_tutor_type as staffTutorType,
+        a.staff_degree as staffDegree,
+        a.user_activestate as staffActivestatus,
+        a.isuse_medicalhelp as isuseMedicalhelp,
+        a.openid as openid,
+
+        a.remark as remark,
+
+        c.id as rid,
+        c.role_id as roleId,
+        f.role_name as roleName,
+
+        d.id as gid,
+        d.grid_id as gridId,
+        e.grid_fullname as gridFullname
+
+        FROM
+        (
+        select * from tb_user where
+        ((delete_flag is null) or delete_flag=0) AND (user_type = 2)
+        AND hosp_ID =#{hospId}
+
+        <if test="deptId!=null and deptId!=''">
+            AND dept_id = #{deptId}
+        </if>
+
+        <if test="staffName!=null and staffName!=''">
+            AND user_name = LIKE CONCAT('%',#{staffName},'%')
+        </if>
+
+        <if test="staffMobile!=null and staffMobile!=''">
+            AND user_mobile = #{staffMobile}
+        </if>
+
+        <if test="staffTel!=null and staffTel!=''">
+            AND staff_tel = #{staffTel}
+        </if>
+        ) as a
+
+        LEFT JOIN (select id,dept_name from tb_department where hosp_ID =#{hospId} AND ((delete_flag is null) or delete_flag=0)) as b on b.id=a.dept_id
+        LEFT JOIN tb_user_role c ON c.user_id=a.id AND ((c.delete_flag is null) OR c.delete_flag = 0)
+        LEFT JOIN tb_user_grid d ON d.user_id=a.id AND ((d.delete_flag is null) OR d.delete_flag = 0)
+        LEFT JOIN tb_grid e ON e.id=d.grid_id AND ((e.delete_flag is null) OR e.delete_flag = 0)
+        LEFT JOIN tb_role f ON f.id=c.role_id AND ((f.delete_flag is null) OR f.delete_flag = 0)
+
+        group by
+            a.id
+        ORDER BY
+            a.update_time desc
+    </select>
+
+
+    <select id="getbyid" resultMap="selectStaffMap">
+        SELECT
+        a.id as id,
+
+        a.openid as openid,
+        a.user_name as staffName,
+        a.user_sex as staffSex,
+        a.user_mobile as staffMobile,
+        a.user_activestate as staffActivestatus,
+        a.user_login_name as staffLoginName,
+        a.user_login_nickname as staffLoginNickname,
+        a.user_password as staffLoginPassword,
+
+        a.staff_code as staffCode,
+        a.staff_birthday as staffBirthday,
+        a.dept_id as deptId,
+        b.dept_name as deptName,
+        a.staff_tel as staffTel,
+        a.staff_adminis_position as staffAdminisPosition,
+        a.staff_technical_position as staffTechnicalPosition,
+        a.staff_education_position as staffEducationPosition,
+        a.staff_tutor_type as staffTutorType,
+        a.staff_degree as staffDegree,
+        a.isuse_medicalhelp as isuseMedicalhelp,
+
+        a.staff_email as staffEmail,
+        a.staff_weixin as staffWeixin,
+        a.staff_qq as staffQq,
+        a.staff_picture as staffPicture,
+        a.staff_identification as staffIdentification,
+        a.hosp_ID as hospID,
+
+        a.create_by as createBy,
+        a.create_time as createTime,
+        a.update_time as updateTime,
+        a.remark as remark,
+
+        c.id as rid,
+        c.role_id as roleId,
+        f.role_name as roleName,
+
+        d.id as gid,
+        d.grid_id as gridId,
+        e.grid_fullname as gridFullname
+
+        FROM
+        tb_user a
+        LEFT JOIN (select id,dept_name from tb_department where ((delete_flag is null) or delete_flag=0)) as b on b.id=a.dept_id
+        LEFT JOIN tb_user_role c ON c.user_id=a.id AND ((c.delete_flag is null) OR c.delete_flag = 0)
+        LEFT JOIN tb_user_grid d ON d.user_id=a.id AND ((d.delete_flag is null) OR d.delete_flag = 0)
+        LEFT JOIN tb_grid e ON e.id=d.grid_id AND ((e.delete_flag is null) OR e.delete_flag = 0)
+        LEFT JOIN tb_role f ON f.id=c.role_id AND ((f.delete_flag is null) OR f.delete_flag = 0)
+
+        WHERE
+        ((a.delete_flag is null) OR a.delete_flag = 0) AND (a.user_type = 2)
+        AND a.id = #{Id}
+        ORDER BY
+        a.update_time desc
+    </select>
+
+    <select id="findByName" resultMap="selectStaffMap">
+        SELECT
+        a.id as id,
+
+        a.openid as openid,
+        a.user_name as staffName,
+        a.user_sex as staffSex,
+        a.user_mobile as staffMobile,
+        a.user_activestate as staffActivestatus,
+        a.user_login_name as staffLoginName,
+        a.user_login_nickname as staffLoginNickname,
+        a.user_password as staffLoginPassword,
+
+        a.staff_code as staffCode,
+        a.staff_birthday as staffBirthday,
+        a.dept_id as deptId,
+        b.dept_name as deptName,
+        a.staff_tel as staffTel,
+        a.staff_adminis_position as staffAdminisPosition,
+        a.staff_technical_position as staffTechnicalPosition,
+        a.staff_education_position as staffEducationPosition,
+        a.staff_tutor_type as staffTutorType,
+        a.staff_degree as staffDegree,
+        a.isuse_medicalhelp as isuseMedicalhelp,
+
+        a.staff_email as staffEmail,
+        a.staff_weixin as staffWeixin,
+        a.staff_qq as staffQq,
+        a.staff_picture as staffPicture,
+        a.staff_identification as staffIdentification,
+        a.hosp_ID as hospID,
+
+        a.create_by as createBy,
+        a.create_time as createTime,
+        a.update_time as updateTime,
+        a.remark as remark,
+
+        c.id as rid,
+        c.role_id as roleId,
+        f.role_name as roleName,
+
+        d.id as gid,
+        d.grid_id as gridId,
+        e.grid_fullname as gridFullname
+
+        FROM
+        tb_user a
+        LEFT JOIN (select id,dept_name from tb_department where ((delete_flag is null) or delete_flag=0)) as b on b.id=a.dept_id
+        LEFT JOIN tb_user_role c ON c.user_id=a.id AND ((c.delete_flag is null) OR c.delete_flag = 0)
+        LEFT JOIN tb_user_grid d ON d.user_id=a.id AND ((d.delete_flag is null) OR d.delete_flag = 0)
+        LEFT JOIN tb_grid e ON e.id=d.grid_id AND ((e.delete_flag is null) OR e.delete_flag = 0)
+        LEFT JOIN tb_role f ON f.id=c.role_id AND ((f.delete_flag is null) OR f.delete_flag = 0)
+
+        WHERE
+        ((a.delete_flag is null) OR a.delete_flag = 0) AND (a.user_type = 2)
+        AND a.hosp_ID = #{hospId}
+        <if test="deptId!=null and deptId!=''">
+            AND a.dept_id = #{deptId}
+        </if>
+        <if test="staffName!=null and staffName!=''">
+            AND a.user_name = #{staffName}
+        </if>
+        ORDER BY
+        a.update_time desc
+    </select>
+
+    <!-- 依据人员ID删除人员记录 -->
+    <delete id="delete" parameterType="java.lang.String" statementType="CALLABLE">
+		{call delete_staff(#{staffId,mode=IN})}
+	</delete>
+
+    <!-- 依据人员ID删除人员及其相关信息记录 -->
+    <delete id="deleteAtt" parameterType="java.lang.String" statementType="CALLABLE">
+		{call delete_staffatt(#{staffId,mode=IN})}
+	</delete>
+
+</mapper>

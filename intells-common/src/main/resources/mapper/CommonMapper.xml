@@ -1,0 +1,1372 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.ujs.lp.intells.common.dao.CommonMapper">
+
+    <!-- 医院职工主要属性数据对象 -->
+    <resultMap id="selectStaffBriefMap" type="cn.edu.ujs.lp.intells.common.entity.Hosp.StaffBrief">
+        <id column="id" property="id" />
+
+        <result column="staffName"  property="staffName"/>
+        <result column="staffSex"  property="staffSex"/>
+        <result column="staffCode" property="staffCode"/>
+        <result column="staffMobile" property="staffMobile"/>
+        <result column="staffBirthday" property="staffBirthday"/>
+        <result column="deptId" property="deptId"/>
+        <result column="deptName" property="deptName"/>
+        <result column="staffTel" property="staffTel"/>
+        <result column="staffAdminisPosition" property="staffAdminisPosition"/>
+        <result column="staffTechnicalPosition" property="staffTechnicalPosition"/>
+        <result column="staffEducationPosition"  property="staffEducationPosition"/>
+        <result column="staffTutorType"  property="staffTutorType"/>
+        <result column="staffDegree" property="staffDegree"/>
+        <result column="staffActivestatus" property="staffActivestatus"/>
+        <result column="isuseMedicalhelp" property="isuseMedicalhelp"/>
+        <result column="openid" property="openid"/>
+
+        <result column="remark" property="remark"/>
+
+        <collection property="roleIds" ofType="cn.edu.ujs.lp.intells.common.entity.User.UserRoleBrief">
+            <id column="rid"></id>
+            <result column="roleId" property="roleId"></result>
+            <result column="roleName" property="roleName"></result>
+        </collection>
+
+        <collection property="gridIds" ofType="cn.edu.ujs.lp.intells.common.entity.User.UserGridBrief">
+            <id column="gid" ></id>
+            <result column="gridId" property="gridId"></result>
+            <result column="gridFullname" property="gridFullname"></result>
+        </collection>
+    </resultMap>
+
+
+    <resultMap id="selectExteamBriefMap" type="cn.edu.ujs.lp.intells.common.entity.Hosp.ExteamBrief">
+        <id column="id" property="id" />
+
+        <result column="exteamName"  property="exteamName"/>
+        <result column="exteamCode"  property="exteamCode"/>
+        <result column="exservicesId" property="exservicesId"/>
+        <result column="exservicesName" property="exservicesName"/>
+        <result column="excompanyId" property="excompanyId"/>
+        <result column="excompanyName" property="excompanyName"/>
+        <result column="serviceId" property="serviceId"/>
+        <result column="exteamLeaderName" property="exteamLeaderName"/>
+        <result column="exteamLeaderMobile" property="exteamLeaderMobile"/>
+        <result column="exteamLeaderId" property="exteamLeaderId"/>
+        <result column="exteamTel"  property="exteamTel"/>
+        <result column="exteamStaffAmount"  property="exteamStaffAmount"/>
+        <result column="exteamFullname" property="exteamFullname"/>
+        <result column="exteamLevel" property="exteamLevel"/>
+
+        <result column="superId" property="superId"/>
+
+        <collection property="gridIds" ofType="cn.edu.ujs.lp.intells.common.entity.Hosp.ExteamGridBrief">
+            <id column="gid" ></id>
+            <result column="gridId" property="gridId"></result>
+            <result column="gridFullname" property="gridFullname"></result>
+        </collection>
+    </resultMap>
+
+
+    <resultMap id="selectExstaffBriefMap" type="cn.edu.ujs.lp.intells.common.entity.Hosp.ExstaffBrief">
+        <id column="id" property="id" />
+
+        <result column="exstaffName"  property="exstaffName"/>
+        <result column="exstaffSex"  property="exstaffSex"/>
+        <result column="exstaffBirthday" property="exstaffBirthday"/>
+        <result column="exstaffMobile" property="exstaffMobile"/>
+        <result column="exstaffJobNo" property="exstaffJobno"/>
+        <result column="exstaffJobstate" property="exstaffJobstate"/>
+        <result column="exstaffActivestate" property="exstaffActivestate"/>
+        <result column="excompanyId" property="excompanyId"/>
+        <result column="excompanyName" property="excompanyName"/>
+        <result column="exteamId" property="exteamId"/>
+        <result column="exteamName" property="exteamName"/>
+        <result column="exstaffEmploystartdate" property="exstaffEmploystartdate"/>
+        <result column="exstaffEmployenddate" property="exstaffEmployenddate"/>
+        <result column="exstaffEmercontactname" property="exstaffEmercontactname"/>
+        <result column="exstaffEemercontacttel" property="exstaffEmercontacttel"/>
+
+        <result column="remark" property="remark"/>
+
+        <collection property="roleIds" ofType="cn.edu.ujs.lp.intells.common.entity.User.UserRoleBrief">
+            <id column="rid"></id>
+            <result column="roleId" property="roleId"></result>
+            <result column="roleName" property="roleName"></result>
+        </collection>
+
+        <collection property="gridIds" ofType="cn.edu.ujs.lp.intells.common.entity.User.UserGridBrief">
+            <id column="gid"></id>
+            <result column="gridId" property="gridId"></result>
+            <result column="gridFullname" property="gridFullname"></result>
+        </collection>
+
+    </resultMap>
+
+    <!-- 依据网格ID获取蓝牙信标UUID -->
+    <select id="getIbeaconUUIDbygridId" resultType="java.lang.String">
+        SELECT
+        ibeacon_UUID
+        FROM
+        tb_ibeacon
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0)
+            AND grid_id = #{gridId}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据角色ID获取角色名称 -->
+    <select id="getRolenamebyId" resultType="java.lang.String">
+        SELECT
+        role_name
+        FROM
+        tb_role
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0)
+            AND id = #{Id}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据角色名称获取角色ID -->
+    <select id="getRoleidbyName" resultType="java.lang.String">
+        SELECT
+        id
+        FROM
+        tb_role
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0)
+            AND role_name = #{roleName}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据医院功能名称获取医院功能ID -->
+    <select id="getHospFunctionidbyName" resultType="java.lang.String">
+        SELECT
+        id
+        FROM
+        tb_hospFunctions
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0)
+            AND functionname = #{functionName}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据医院功能ID获取医院功能名称 -->
+    <select id="getHospFunctionnamebyId" resultType="java.lang.String">
+        SELECT
+        functionname
+        FROM
+        tb_hospFunctions
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0)
+            AND id = #{Id}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据医院ID获取医院编码 -->
+    <select id="getHospCodebyId" resultType="java.lang.String">
+        SELECT
+        hosp_code
+        FROM
+        tb_hospital_basic_information
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0)
+            AND id = #{Id}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据医院ID获取医院名称 -->
+    <select id="getHospNamebyId" resultType="java.lang.String">
+        SELECT
+        hosp_name
+        FROM
+        tb_hospital_basic_information
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0)
+            AND id = #{Id}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据医院ID获取医院编码 -->
+    <select id="getHospservecentertelbyId" resultType="java.lang.String">
+        SELECT
+        hosp_serve_center_tel
+        FROM
+        tb_hospital_basic_information
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0)
+            AND id = #{Id}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据医院名称获取医院ID -->
+    <select id="getHospIdbyName" resultType="java.lang.String">
+        SELECT
+        id
+        FROM
+        tb_hospital_basic_information
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0)
+            AND hosp_name = #{hospName}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据科室ID获取科室名称 -->
+    <select id="getDeptFullnamebyId" resultType="java.lang.String">
+        SELECT
+        dept_fullname
+        FROM
+        tb_department
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0)
+            AND id = #{Id}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据科室名称获取科室ID -->
+    <select id="getDeptIdbyFullname" resultType="java.lang.String">
+        SELECT
+        id
+        FROM
+        tb_department
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0)
+            AND hosp_ID = #{hospId}
+            AND dept_fullname = #{deptFullname}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据网格ID获取网格编码 -->
+    <select id="getGridCodebyId" resultType="java.lang.String">
+        SELECT
+        grid_code
+        FROM
+        tb_grid
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0)
+            AND id = #{Id}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据网格ID获取网格编码 -->
+    <select id="getGridIdbyCode" resultType="java.lang.String">
+        SELECT
+        id
+        FROM
+        tb_grid
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0)
+            AND grid_code = #{gridCode}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据网格ID获取网格全名 -->
+    <select id="getGridFullnamebyId" resultType="java.lang.String">
+        SELECT
+        grid_fullname
+        FROM
+        tb_grid
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0)
+            AND id = #{Id}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据网格全名获取网格ID -->
+    <select id="getGridIdbyFullname" resultType="java.lang.String">
+        SELECT
+        id
+        FROM
+        tb_grid
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0)
+            AND hosp_ID = #{hospId}
+            AND grid_fullname = #{gridFullname}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据网格ID获取网格全路径ID列表 -->
+    <select id="getGridPathbyId" resultType="java.lang.String">
+        SELECT getGridPathbyId (#{gridId})
+    </select>
+
+    <!-- 依据网格ID获取该网格的服务班组ID列表 -->
+    <select id="getGridExteams" resultType="java.lang.String">
+        SELECT
+        team_id
+        FROM
+        tb_exteam_grid
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0)
+            AND grid_id = #{gridId}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据医院ID、科室ID和职工名称获取职工ID -->
+    <select id="getStaffIdbyName" resultType="java.lang.String">
+        SELECT
+        id
+        FROM
+        tb_user
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0) AND (user_type=2)
+            AND hosp_ID = #{hospId}
+            <if test="deptId!=null and deptId!=''">
+                AND dept_id = #{deptId}
+            </if>
+            AND user_name = #{staffName}
+        ORDER BY
+        update_time desc
+    </select>
+
+
+    <!-- 依据医院ID、科室ID和职工名称获取职工ID -->
+    <select id="getStaffIdbyFullname" resultType="java.lang.String">
+        SELECT
+        id
+        FROM
+        tb_user
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0) AND (user_type=2)
+            AND hosp_ID = #{hospId}
+            AND remark = #{fullName}
+        ORDER BY
+        update_time desc
+    </select>
+
+
+    <!-- 依据职工ID获取科室名称+职工姓名 -->
+    <select id="getStaffFullnamebyId" resultType="java.lang.String">
+        SELECT
+            a.remark as fullname
+		from tb_user a
+		    LEFT JOIN tb_department b ON a.dept_id=b.id And ((b.delete_flag is null) OR b.delete_flag = 0)
+		where
+		    ((a.delete_flag is null) or (a.delete_flag = 0)) AND (user_type=2)
+		    AND a.id=#{staffId}
+		ORDER BY
+        a.update_time desc
+    </select>
+
+    <!-- 依据职工ID获取职工姓名 -->
+    <select id="getStaffnamebyId" resultType="java.lang.String">
+        SELECT
+            user_name
+		from tb_user
+		where
+		    ((delete_flag is null) or (delete_flag == 0)) AND (user_type=2)
+		    AND id=#{staffId}
+		ORDER BY
+        update_time desc
+    </select>
+
+
+    <!-- 依据外委公司ID获取外委公司名称 -->
+    <select id="getExcompanyNamebyId" resultType="java.lang.String">
+        SELECT
+        excompany_name
+        FROM
+        tb_excompany
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0)
+            AND id = #{Id}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据外委公司名称获取外委公司ID -->
+    <select id="getExcompanyIdbyName" resultType="java.lang.String">
+        SELECT
+        id
+        FROM
+        tb_excompany
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0)
+            AND hosp_ID = #{hospId}
+            AND excompany_name = #{excompanyName}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据业务部门ID获取业务部门名称 -->
+    <select id="getExcompanyservicesNamebyId" resultType="java.lang.String">
+        SELECT
+        exservice_name
+        FROM
+        tb_excompany_services
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0)
+            AND id = #{Id}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据业务部门名称获取业务部门ID -->
+    <select id="getExcompanyservicesIdbyName" resultType="java.lang.String">
+        SELECT
+        id
+        FROM
+        tb_excompany_services
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0)
+            AND hosp_ID = #{hospId}
+            AND excompany_id = #{excompanyId}
+            AND exservice_name = #{exserviceName}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据服务班组ID获取服务班组名称 -->
+    <select id="getExteamFullnamebyId" resultType="java.lang.String">
+        SELECT
+        exteam_fullname
+        FROM
+        tb_exteam
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0)
+            AND id = #{Id}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据服务班组ID获取包含服务公司和服务部门的服务班组全名 -->
+    <select id="getExteamFullpathnamebyId" resultType="java.lang.String">
+        SELECT
+        CONCAT (b.excompany_name,"->",a.exteam_fullname) as fullpathname
+        FROM
+        tb_exteam a
+            LEFT Join tb_excompany b ON a.excompany_id=b.id and ((b.delete_flag is null) or (b.delete_flag=0))
+        WHERE
+            ((a.delete_flag is null) OR a.delete_flag = 0)
+            AND a.id = #{Id}
+        ORDER BY
+        a.update_time desc
+    </select>
+
+    <!-- 依据服务班组名称获取服务班组ID -->
+    <select id="getExteamIdbyFullName" resultType="java.lang.String">
+        SELECT
+        id
+        FROM
+        tb_exteam
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0)
+            AND hosp_ID = #{hospId}
+            AND exteam_fullname = #{exteamFullname}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据服务班组名称获取服务班组ID -->
+    <select id="getExteamIdbyName" resultType="java.lang.String">
+        SELECT
+        id
+        FROM
+        tb_exteam
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0)
+            AND hosp_ID = #{hospId}
+            AND excompany_id=#{excompanyId}
+            AND exteam_name = #{exteamName}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据网格ID获取责任班组列表 -->
+    <select id="getExteamnamebygridid" resultType="java.lang.String">
+        SELECT
+        exteam_name
+
+        FROM
+        tb_exteam a
+        LEFT JOIN tb_exteam_grid b ON a.id = b.team_id
+        AND ((b.delete_flag is null) OR b.delete_flag = 0)
+        WHERE
+        ((a.delete_flag is null) OR a.delete_flag = 0)
+        <if test="gridId!=null and gridId!=''">
+            AND b.grid_id = #{gridId}
+        </if>
+
+        ORDER BY
+        a.exteam_code asc
+    </select>
+
+
+    <!-- 依据医院ID、外委公司ID、服务班组ID和外委职工名称获取职工ID -->
+    <select id="getExstaffIdbyName" resultType="java.lang.String">
+        SELECT
+        id
+        FROM
+        tb_user
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0) AND (user_type=3)
+            AND hosp_ID = #{hospId}
+            AND excompany_id = #{excompanyId}
+            <if test="exteamId!=null and exteamId!=''">
+                AND exteam_id = #{exteamId}
+            </if>
+            AND user_name = #{exstaffName}
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据职工ID获取外委公司名称+服务班组名称+职工姓名 -->
+    <select id="getExstaffFullnamebyId" resultType="java.lang.String">
+        SELECT
+            CONCAT(c.excompany_name "->",b.exteam_fullname,"->",a.user_name) as fullname
+		from tb_user a
+		    LEFT JOIN tb_exteam b ON a.exteam_id=b.id And ((b.delete_flag is null) OR b.delete_flag = 0)
+		    LEFT JOIN tb_excompany c ON a.excompany_id=c.id And ((c.delete_flag is null) OR c.delete_flag = 0)
+		where
+		    ((a.delete_flag is null) or (a.delete_flag = 0))
+		    AND a.id=#{exstaffId}
+		ORDER BY
+        a.update_time desc
+    </select>
+
+    <!-- 依据职工ID获取职工姓名 -->
+    <select id="getExstaffnamebyId" resultType="java.lang.String">
+        SELECT
+            user_name
+		from tb_user
+		where
+		    ((delete_flag is null) or (delete_flag = 0)) AND (user_type=3)
+		    AND id=#{exstaffId}
+		ORDER BY
+        update_time desc
+    </select>
+
+
+    <!-- 依据设备运维分类ID获取设备运维分类编码 -->
+    <select id="getDevicecategoryCodebyId" resultType="java.lang.String">
+        SELECT
+        category_code
+
+        FROM
+        tb_devicecategory
+
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        AND id = #{Id}
+
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据设备运维分类全名获取设备运维分类ID -->
+    <select id="getDevicecategoryIdbyFullname" resultType="java.lang.String">
+        SELECT
+        id
+
+        FROM
+        tb_devicecategory
+
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        AND hosp_ID = #{hospId}
+        AND category_fullname = #{categoryFullname}
+
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据设备运维分类ID获取设备运维分类全名 -->
+    <select id="getDevicecategoryFullnamebyId" resultType="java.lang.String">
+        SELECT
+        category_fullname
+
+        FROM
+        tb_devicecategory
+
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        AND id = #{Id}
+
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据设备ID获取设备名称 -->
+    <select id="getDeviceNamebyId" resultType="java.lang.String">
+        SELECT
+        assetname
+
+        FROM
+        tb_devicebill
+
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        AND id = #{Id}
+
+        ORDER BY
+        update_time desc
+    </select>
+
+
+    <select id="getDeviceIdbyName" resultType="java.lang.String">
+        SELECT
+        id
+        FROM
+        tb_devicebill
+        WHERE
+            ((delete_flag is null) OR delete_flag = 0)
+            AND hosp_ID = #{hospId}
+            AND devicecategory = #{deviceCategory}
+            AND assetname LIKE CONCAT('%',#{assetName},'%')
+        ORDER BY
+        update_time desc
+    </select>
+
+    <select id="getDevicetaskownerIDbyGridcode" resultType="java.lang.String">
+        SELECT
+        task_owner
+        FROM
+        tb_devicebill a
+        LEFT JOIN tb_grid b ON b.id=a.grid_id AND ((b.delete_flag is null) OR b.delete_flag = 0)
+
+        WHERE
+            ((a.delete_flag is null) OR a.delete_flag = 0)
+            AND a.hosp_ID = #{hospId}
+            AND b.grid_code LIKE CONCAT(#{gridCode},'%')
+
+        group by
+            a.task_owner
+
+        ORDER BY
+        b.grid_code asc
+    </select>
+
+
+    <!--依据医院名称模糊过滤医院主要信息列表显示-->
+    <select id="gethospFunctions" resultType="cn.edu.ujs.lp.intells.common.entity.Hosp.HospFunctionBrief">
+        SELECT
+        id as functionId,
+        functionname as functionName
+
+        FROM
+        tb_hospFunctions
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!--依据医院名称模糊过滤医院主要信息列表显示-->
+    <select id="getHosps" resultType="cn.edu.ujs.lp.intells.common.entity.Hosp.HospBrief">
+        SELECT
+        a.id as id,
+
+        a.hosp_code as hospCode,
+        a.hosp_name as hospName,
+        a.pid as Pid,
+        a.cid as Cid,
+        a.county_id as CountyId,
+        a.hosp_detail_address as hospDetailaddress,
+        a.hosp_president as hospPresident,
+        a.hosp_legal_name as hospLegalname,
+        a.hosp_centerX as hospCenterX,
+        a.hosp_centerY as hospCenterY,
+        a.hosp_badge as hospBadge,
+        a.hosp_picture as hospPicture,
+        a.hosp_serve_center_tel as hospServeCenterTel,
+
+        g.user_name as userName,
+        g.user_sex as userSex,
+        g.user_mobile as userMobile,
+
+        a.remark
+
+        FROM
+        tb_hospital_basic_information as a
+        LEFT JOIN
+        (select user_name,user_sex,user_mobile,hosp_ID
+        from (select id,user_name,user_sex,user_mobile,hosp_ID from tb_user
+        where (hosp_ID is not null) and user_type=1 and ((delete_flag is null) OR delete_flag=0)) as d
+        LEFT JOIN tb_user_role e ON e.user_id=d.id  and ((e.delete_flag is null) OR e.delete_flag=0) and (e.role_id="004")
+        ) as g on g.hosp_ID=a.id
+
+        WHERE
+        ((a.delete_flag is null) OR a.delete_flag = 0)
+        <if test="hospName!=null and hospName!=''">
+            AND a.hosp_name LIKE CONCAT('%',#{hospName},'%')
+        </if>
+
+        ORDER BY
+        a.update_time desc
+    </select>
+
+    <!--依据医院ID和科室名称模糊过滤科室主要信息列表显示-->
+    <select id="getDepts" resultType="cn.edu.ujs.lp.intells.common.entity.Hosp.DepartmentBrief">
+        SELECT
+        id as id,
+
+        dept_name as deptName,
+        dept_code as deptCode,
+        dept_tel as deptTel,
+        dept_leader_name as deptLeaderName,
+        dept_leader_tel as deptLeaderTel,
+        superior_id as superiorId,
+        dept_selfcode as deptSelfcode,
+        dept_level as deptLevel,
+        dept_fullname as deptFullname
+        FROM
+        tb_department
+        WHERE
+        ((delete_flag is null) or delete_flag=0)
+        AND hosp_ID = #{hospId}#
+
+        <if test="deptName!=null and deptName!=''">
+            AND dept_name LIKE CONCAT('%',#{deptName},'%')
+        </if>
+        ORDER BY
+        update_time desc
+    </select>
+
+
+    <!-- 依据医院ID、或科室ID、上级ID、网格名称模糊获取网格对象列表 -->
+    <select id="getGrids" resultType="cn.edu.ujs.lp.intells.common.entity.Hosp.GridBrief">
+        SELECT
+        a.id as id,
+
+        grid_code as gridCode,
+        grid_name as gridName,
+        a.superior_grid_id as superiorGridid,
+        a.dept_id as deptId,
+        b.dept_name as deptName,
+        grid_level as gridLevel,
+        grid_area as gridArea,
+        grid_placeclass_id as gridPlaceclassid,
+        grid_fullname as gridFullname
+
+        FROM
+        ( select * from tb_grid where
+            ((delete_flag is null) OR delete_flag = 0)
+            AND hosp_ID = #{hospId}
+
+            <if test="deptId!=null and deptId!=''">
+                AND dept_id = #{deptId}
+            </if>
+
+            <if test="superiorGridid!=null and superiorGridid!=''">
+                AND ((superior_grid_id = #{superiorGridid}) or (id = #{superiorGridid}))
+            </if>
+
+            <if test="gridName!=null and gridName!=''">
+                AND grid_name LIKE CONCAT('%',#{gridName},'%')
+            </if>
+        ) as a
+
+        LEFT JOIN (select id,dept_name from tb_department where ((delete_flag is null) or delete_flag=0) and hosp_ID = #{hospId}) as b on b.id=a.dept_id
+
+        ORDER BY
+        a.grid_code asc
+    </select>
+
+    <!-- 依据医院ID和上级网格ID获取下一级网格子对象列表 -->
+    <select id="getsubGrids" resultType="cn.edu.ujs.lp.intells.common.entity.Hosp.GridBrief">
+        SELECT
+        a.id as id,
+
+        grid_code as gridCode,
+        grid_name as gridName,
+        a.superior_grid_id as superiorGridid,
+        a.dept_id as deptId,
+        b.dept_name as deptName,
+        grid_level as gridLevel,
+        grid_area as gridArea,
+        grid_placeclass_id as gridPlaceclassid,
+        grid_fullname as gridFullname
+
+        FROM
+        ( select * from tb_grid where
+        ((delete_flag is null) OR delete_flag = 0)
+        AND hosp_ID = #{hospId}
+
+        <choose>
+            <when test="superiorGridid!=null and superiorGridid!=''">
+                AND (superior_grid_id = #{superiorGridid})
+            </when>
+            <otherwise>
+                AND (superior_grid_id is null)
+            </otherwise>
+        </choose>
+
+        ) as a
+
+        LEFT JOIN (select id,dept_name from tb_department where ((delete_flag is null) or delete_flag=0) and hosp_ID = #{hospId}) as b on b.id=a.dept_id
+
+        ORDER BY
+        a.grid_code asc
+    </select>
+
+    <!-- 依据医院ID和上级网格ID获取自己和下一级网格子对象列表 -->
+    <select id="getselfandsubGrids" resultType="cn.edu.ujs.lp.intells.common.entity.Hosp.GridBrief">
+        SELECT
+        a.id as id,
+
+        grid_code as gridCode,
+        grid_name as gridName,
+        a.superior_grid_id as superiorGridid,
+        a.dept_id as deptId,
+        b.dept_name as deptName,
+        grid_level as gridLevel,
+        grid_area as gridArea,
+        grid_placeclass_id as gridPlaceclassid,
+        grid_fullname as gridFullname
+
+        FROM
+        ( select * from tb_grid where
+        ((delete_flag is null) OR delete_flag = 0)
+        AND hosp_ID = #{hospId}
+
+        <choose>
+            <when test="superiorGridid!=null and superiorGridid!=''">
+                AND ((superior_grid_id = #{superiorGridid}) or (id = #{superiorGridid}))
+            </when>
+            <otherwise>
+                AND (superior_grid_id is null)
+            </otherwise>
+        </choose>
+
+        ) as a
+
+        LEFT JOIN (select id,dept_name from tb_department where ((delete_flag is null) or delete_flag=0) and hosp_ID = #{hospId}) as b on b.id=a.dept_id
+
+        ORDER BY
+        a.grid_code asc
+    </select>
+
+
+    <!-- 依据医上级网格编码获取网格子对象列表 -->
+    <select id="getallsubGrids" resultType="cn.edu.ujs.lp.intells.common.entity.Hosp.GridBrief">
+        SELECT
+        a.id as id,
+
+        grid_code as gridCode,
+        grid_name as gridName,
+        a.superior_grid_id as superiorGridid,
+        a.dept_id as deptId,
+        b.dept_name as deptName,
+        grid_level as gridLevel,
+        grid_area as gridArea,
+        grid_placeclass_id as gridPlaceclassid,
+        grid_fullname as gridFullname
+
+        FROM
+        ( select * from tb_grid where
+        ((delete_flag is null) OR delete_flag = 0)
+        AND hosp_ID = #{hospId}
+
+        <if test="gridCode!=null and gridCode!=''">
+            AND grid_code like concat(#{gridCode},"%")
+        </if>
+
+        ) as a
+
+        LEFT JOIN (select id,dept_name from tb_department where ((delete_flag is null) or delete_flag=0) and hosp_ID = #{hospId}) as b on b.id=a.dept_id
+
+        ORDER BY
+        a.grid_code asc
+    </select>
+
+    <!-- 依据医院ID获取所有楼栋对象列表 -->
+    <select id="getBuilds" resultType="cn.edu.ujs.lp.intells.common.entity.Hosp.GridBrief">
+        SELECT
+        a.id as id,
+
+        grid_code as gridCode,
+        grid_name as gridName,
+        a.superior_grid_id as superiorGridid,
+        a.dept_id as deptId,
+        b.dept_name as deptName,
+        grid_level as gridLevel,
+        grid_area as gridArea,
+        grid_placeclass_id as gridPlaceclassid,
+        grid_fullname as gridFullname
+
+        FROM
+        ( select * from tb_grid where
+        ((delete_flag is null) OR delete_flag = 0)
+        AND hosp_ID = #{hospId}
+        AND ((LENGTH(grid_code) &lt;= 10) or (grid_level &lt;= 2))
+        ) as a
+
+        LEFT JOIN (select id,dept_name from tb_department where ((delete_flag is null) or delete_flag=0) and hosp_ID = #{hospId}) as b on b.id=a.dept_id
+
+        ORDER BY
+        a.grid_code asc
+    </select>
+
+
+<!-- 依据医院ID、或科室ID、上级ID、网格名称模糊获取网格对象列表 -->
+    <select id="getGridsbyPlaceclass" resultType="cn.edu.ujs.lp.intells.common.entity.Hosp.GridBrief">
+        SELECT
+        a.id as id,
+
+        grid_code as gridCode,
+        grid_name as gridName,
+        a.superior_grid_id as superiorGridid,
+        a.dept_id as deptId,
+        b.dept_name as deptName,
+        grid_level as gridLevel,
+        grid_area as gridArea,
+        grid_placeclass_id as gridPlaceclassid,
+        grid_fullname as gridFullname
+
+        FROM
+        tb_grid a
+        LEFT JOIN tb_department b on b.id=a.dept_id and ((b.delete_flag is null) or b.delete_flag=0)
+
+        WHERE
+        ((a.delete_flag is null) OR a.delete_flag = 0)
+
+        AND a.hosp_ID = #{hospId}
+
+        <if test="gridPlaceclassid!=null and gridPlaceclassid!=''">
+            AND a.grid_placeclass_id = #{gridPlaceclassid}
+        </if>
+
+        <if test="gridName!=null and gridName!=''">
+            AND a.grid_fullname LIKE CONCAT('%',#{gridName},'%')
+        </if>
+
+        ORDER BY
+        a.grid_code asc
+    </select>
+
+    <!-- 依据医院ID、或科室ID、或姓名模糊获取在职员工对象列表 -->
+    <select id="getStaffs" resultMap="selectStaffBriefMap">
+        SELECT
+        a.id as id,
+
+        a.user_name as staffName,
+        a.user_sex as staffSex,
+        a.staff_code as staffCode,
+        a.user_mobile as staffMobile,
+        a.staff_birthday as staffBirthday,
+        a.dept_id as deptId,
+        b.dept_name as deptName,
+        a.staff_tel as staffTel,
+        a.staff_adminis_position as staffAdminisPosition,
+        a.staff_technical_position as staffTechnicalPosition,
+        a.staff_education_position as staffEducationPosition,
+        a.staff_tutor_type as staffTutorType,
+        a.staff_degree as staffDegree,
+        a.user_activestate as staffActivestatus,
+        a.isuse_medicalhelp as isuseMedicalhelp,
+        a.openid as openid,
+
+        a.remark as remark,
+
+        c.id as rid,
+        c.role_id as roleId,
+        f.role_name as roleName,
+
+        d.id as gid,
+        d.grid_id as gridId,
+        e.grid_fullname as gridFullname
+
+        FROM
+        (
+            select * from tb_user where
+            ((delete_flag is null) or delete_flag=0) AND (user_type = 2)
+            AND hosp_ID =#{hospId}
+
+            <if test="deptId!=null and deptId!=''">
+                AND dept_id = #{deptId}
+            </if>
+
+            <if test="staffName!=null and staffName!=''">
+                AND user_name = LIKE CONCAT('%',#{staffName},'%')
+            </if>
+        ) as a
+
+        LEFT JOIN (select id,dept_name from tb_department where hosp_ID =#{hospId} AND ((delete_flag is null) or delete_flag=0)) as b on b.id=a.dept_id
+        LEFT JOIN tb_user_role c ON c.user_id=a.id AND ((c.delete_flag is null) OR c.delete_flag = 0)
+        LEFT JOIN tb_user_grid d ON d.user_id=a.id AND ((d.delete_flag is null) OR d.delete_flag = 0)
+        LEFT JOIN tb_grid e ON e.id=d.grid_id AND ((e.delete_flag is null) OR e.delete_flag = 0)
+        LEFT JOIN tb_role f ON f.id=c.role_id AND ((f.delete_flag is null) OR f.delete_flag = 0)
+
+        ORDER BY
+        a.update_time desc
+    </select>
+
+    <!-- 依据医院ID获取外委公司对象列表 -->
+    <select id="getExcompanys" resultType="cn.edu.ujs.lp.intells.common.entity.Hosp.ExcompanyBrief">
+        SELECT
+        id,
+        excompany_name as excompanyName,
+        excompany_legal as excompanyLegal,
+        excompany_leader_name as excompanyLeadername,
+        excompany_leader_tel as excompanyLeadertel,
+        excompany_staff_amount as excompanyStaffamount,
+        excompany_service_startdate as excompanyServicestartdate,
+        excompany_service_enddate as excompanyServiceenddate,
+        services_remark as servicesRemark,
+        excompany_address as excompanyAddress
+        FROM
+        tb_excompany
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        AND hosp_ID = #{hospId}
+
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据医院ID、或外委公司ID获取业务部门对象列表 -->
+    <select id="getExservices" resultType="cn.edu.ujs.lp.intells.common.entity.Hosp.ExServicesBrief">
+        SELECT
+        a.id as id,
+
+        exservice_name as exserviceName,
+        excompany_id as excompanyId,
+        b.excompany_name as excompanyName,
+        service_id as serviceId,
+        leader_name as leaderName,
+        leader_tel as leaderTel,
+        leader_ID as leaderID
+        FROM
+        tb_excompany_services a
+        LEFT JOIN (select id,excompany_name from tb_excompany where ((delete_flag is null) or delete_flag=0)) as b on b.id=a.excompany_id
+
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        AND hosp_ID = #{hospId}
+        <if test="excompanyId!=null and excompanyId!=''">
+            AND excompany_id = #{excompanyId}
+        </if>
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 依据医院ID、或外委公司ID、或业务部门ID获取服务班组对象列表 -->
+    <select id="getExteams" resultMap="selectExteamBriefMap">
+        SELECT
+        a.id as id,
+
+        exteam_name as exteamName,
+        exteam_code as exteamCode,
+        exservices_id as exservicesId,
+        c.exservice_name as exservicesName,
+        excompany_id as excompanyId,
+        b.excompany_name as excompanyName,
+        a.service_id as serviceId,
+        exteam_leader_name as exteamLeaderName,
+        exteam_leader_mobile as exteamLeaderMobile,
+        exteam_tel as exteamTel,
+        exteam_leader_id as exteamLeaderId,
+
+        exteam_staff_amount as exteamStaffAmount,
+
+        a.super_id as superId,
+        exteam_fullname as exteamFullname,
+        exteam_level as exteamLevel,
+
+        d.id as gid,
+        d.grid_id as gridId,
+        e.grid_fullname as gridFullname
+
+        FROM
+        (
+            select * from tb_exteam where
+            ((delete_flag is null) or delete_flag=0)
+            AND hosp_ID =#{hospId}
+
+            <if test="excompanyId!=null and excompanyId!=''">
+                AND excompany_id = #{excompanyId}
+            </if>
+            <if test="exservicesId!=null and exservicesId!=''">
+                AND ((exservices_id is null) or (exservices_id = #{exservicesId}))
+            </if>
+        ) as a
+
+        LEFT JOIN (select id,excompany_name from tb_excompany where ((delete_flag is null) or delete_flag=0)) as b on b.id=a.excompany_id
+        LEFT JOIN (select id,exservice_name from tb_excompany_services where ((delete_flag is null) or delete_flag=0)) as c on c.id=a.exservices_id
+        LEFT JOIN tb_exteam_grid d ON d.team_id=a.id AND ((d.delete_flag is null) OR d.delete_flag = 0)
+        LEFT JOIN tb_grid e ON e.id=d.grid_id AND ((e.delete_flag is null) OR e.delete_flag = 0)
+
+        ORDER BY
+        a.exteam_code asc
+    </select>
+
+    <!-- 依据医院ID、服务班组ID获取外委职工对象列表 -->
+    <select id="getExstaffs" resultMap="selectExstaffBriefMap">
+        SELECT
+        a.id as id,
+
+        user_name as exstaffName,
+        user_sex as exstaffSex,
+        exstaff_birthday as exstaffBirthday,
+        user_mobile as exstaffMobile,
+        exstaff_jobNo as exstaffJobNo,
+        exstaff_jobstate as exstaffJobstate,
+        user_activestate as exstaffActivestate,
+        a.excompany_id as excompanyId,
+        b.excompany_name as excompanyName,
+        a.exteam_id as exteamId,
+        c.exteam_name as exteamName,
+        exstaff_employstartdate as exstaffEmploystartdate,
+        exstaff_employenddate as exstaffEmployenddate,
+        exstaff_emercontactname as exstaffEmercontactname,
+        exstaff_emercontacttel as exstaffEmercontacttel,
+
+        d.id as rid,
+        d.user_id as rexstaffId,
+        d.role_id as roleId,
+        g.role_name as roleName,
+
+        e.id as gid,
+        e.user_id as gexstaffId,
+        e.grid_id as gridId,
+        f.grid_fullname as gridFullname
+
+        FROM
+        (
+            select * from tb_user where
+            ((delete_flag is null) or delete_flag=0) AND (user_type = 3)
+            AND hosp_ID =#{hospId}
+
+            <if test="excompanyId!=null and excompanyId!=''">
+                AND excompany_id = #{excompanyId}
+            </if>
+            <if test="exteamId!=null and exteamId!=''">
+                AND exteam_id = #{exteamId}
+            </if>
+        ) as a
+
+        LEFT JOIN (select id,excompany_name from tb_excompany where ((delete_flag is null) or delete_flag=0)) as b on b.id=a.excompany_id
+        LEFT JOIN (select id,exteam_name from tb_exteam where ((delete_flag is null) or delete_flag=0)) as c on c.id=a.exteam_id
+        Left JOIN tb_user_role d ON a.id = d.user_id AND ((d.delete_flag is null) OR d.delete_flag = 0)
+        Left JOIN tb_user_grid e ON a.id = e.user_id AND ((e.delete_flag is null) OR e.delete_flag = 0)
+        LEFT JOIN tb_grid f ON f.id=e.grid_id AND ((f.delete_flag is null) OR f.delete_flag = 0)
+        LEFT JOIN tb_role g ON g.id=d.role_id AND ((g.delete_flag is null) OR g.delete_flag = 0)
+
+        ORDER BY
+        a.excompany_id, a.update_time desc
+    </select>
+
+    <select id="getDevicecategories" resultType="cn.edu.ujs.lp.intells.common.entity.Device.DevicecategoryBrief">
+        SELECT
+        id,
+
+        category_code as categoryCode,
+        category_name as categoryName,
+        superior_id as superiorId,
+
+        devicecategory_level as devicecategoryLevel,
+
+        sortorder as sortOrder,
+        isusing as isUsing,
+
+        manage_affiliation as manageAffiliation,
+        respon_affiliation as responAffiliation,
+
+        category_fullname as categoryFullname
+        FROM
+        tb_devicecategory
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID = #{hospId}
+        </if>
+        <if test="categoryName!=null and categoryName!=''">
+            AND category_name LIKE CONCAT('%',#{categoryName},'%')
+        </if>
+
+        ORDER BY
+        update_time desc
+    </select>
+
+    <select id="getDevicebills" resultType="cn.edu.ujs.lp.intells.common.entity.Device.DevicebillBrief">
+        SELECT
+        id,
+
+        <!-- 作为主要属性考虑 -->
+        device_code as deviceCode,
+        assetcode as assetCode,
+        assetname as assetName,
+        modelspec as modelSpec,
+        devicecategory as deviceCategory,
+        isusing as isUsing,
+        use_status as useStatus,
+        enabledate as enableDate,
+        service_life as serviceLife,
+        repair_expire as repairExpire,
+        administrators as administrators,
+        task_owner as taskOwner,
+
+        grid_id as gridId,
+        dposition as dposition,
+        configuration as configuration,
+        brand as brand,
+        ismedicaluse as isMedicaluse,
+        measurementunit as measurementUnit,
+        equipment_value as equipmentValue,
+
+        assetsource as assetSource,
+        isimported as isImported,
+        supplier as supplier,
+        suppliercontract as supplierContract,
+        suppliertel as supplierTel,
+        manufacturer as manufacturer,
+        productionplace as productionPlace,
+        aftersaletel as aftersaleTel,
+        aftersaleengineer as aftersaleEngineer
+
+        FROM
+        tb_devicebill
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID = #{hospId}
+        </if>
+        <if test="deviceCategory!=null and deviceCategory!=''">
+            AND devicecategory = #{deviceCategory}
+        </if>
+        ORDER BY
+        devicecategory,device_code,update_time desc
+    </select>
+
+    <!-- 获取系统用户角色列表列表 -->
+    <select id="getIbeacons" resultType="cn.edu.ujs.lp.intells.common.entity.Device.IbeaconBrief">
+        SELECT
+        id,
+
+        ibeacon_name as ibeaconName,
+        ibeacon_UUID as ibeaconUUID,
+        ibeacon_RSSI as ibeaconRSSI,
+
+        hosp_ID as hospId,
+        grid_id as gridId,
+        isusing as isUsing,
+        update_time as updateTime
+
+        FROM
+        tb_ibeacon
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+
+        <if test="hospId!=null and hospId!=''">
+            AND hosp_ID = #{hospId}
+        </if>
+        <if test="ibeaconName!=null and ibeaconName!=''">
+            AND ibeacon_name = #{ibeaconName}
+        </if>
+
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 获取系统用户角色列表列表 -->
+    <select id="getSystemRole" resultType="cn.edu.ujs.lp.intells.common.entity.User.RoleBrief">
+        SELECT
+        id,
+
+        role_name as roleName,
+        role_dec as roleDec,
+        remark as typeName
+
+        FROM
+        tb_role
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        AND remark = "1" or role_dec = "1"
+
+        ORDER BY
+        update_time desc
+    </select>
+
+
+    <!-- 获取医院职工角色列表列表 -->
+    <select id="getStaffRole" resultType="cn.edu.ujs.lp.intells.common.entity.User.RoleBrief">
+        SELECT
+        id,
+
+        role_name as roleName,
+        role_dec as roleDec,
+        remark as typeName
+
+        FROM
+        tb_role
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        AND remark = "2" or role_dec = "2"
+
+        ORDER BY
+        update_time desc
+    </select>
+
+
+    <!-- 获取外委职工角色列表列表 -->
+    <select id="getExstaffRole" resultType="cn.edu.ujs.lp.intells.common.entity.User.RoleBrief">
+        SELECT
+        id,
+
+        role_name as roleName,
+        role_dec as roleDec,
+        remark as typeName
+
+        FROM
+        tb_role
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        AND remark = "3" or role_dec = "3"
+
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 获取外委职工角色列表列表 -->
+    <select id="getRoleNamebyID" resultType="java.lang.String">
+        SELECT
+        role_name as roleName
+
+        FROM
+        tb_role
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        AND id = #{roleId}
+
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 获取外委职工角色列表列表 -->
+    <select id="getRoleIDbyName" resultType="java.lang.String">
+        SELECT
+        id
+
+        FROM
+        tb_role
+        WHERE
+        ((delete_flag is null) OR delete_flag = 0)
+        AND role_name = #{roleName}
+
+        ORDER BY
+        update_time desc
+    </select>
+
+    <!-- 获取外委职工角色列表列表 -->
+    <select id="getDeviceExteamnamebyGridid" resultType="java.lang.String">
+        SELECT
+        getDeviceExteamnamebyGridid(#{gridId}) as exteamName
+    </select>
+
+</mapper>
